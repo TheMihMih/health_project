@@ -1,12 +1,22 @@
 click==8.0.1
+<<<<<<< HEAD
 Flask==2.0.1
 Flask-Login==0.5.0
 Flask-SQLAlchemy==2.5.1
 greenlet==1.1.2
+=======
+colorama==0.4.4
+Flask==2.0.1
+Flask-SQLAlchemy==2.5.1
+greenlet==1.1.1
+>>>>>>> aafe73ee198626047798ed04836a4120b329e4f8
 itsdangerous==2.0.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
 SQLAlchemy==1.4.25
 Werkzeug==2.0.1
+<<<<<<< HEAD
 WTForms==2.3.3
 Flask-WTF
+=======
+>>>>>>> aafe73ee198626047798ed04836a4120b329e4f8
