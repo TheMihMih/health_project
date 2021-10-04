@@ -1,10 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
-<<<<<<< HEAD
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
-
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,9 +19,6 @@ class User(db.Model, UserMixin):
     
     def __repr__(self):
         return f"<User name - {self.username}, User ID = {self.id}>"
-=======
-
-db = SQLAlchemy()
 
 class BDConnector(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -34,6 +29,4 @@ class BDConnector(db.Model):
     published = db.Column(db.DateTime, nullable=False)
     
     def __repr__(self):
-        return '<News {} {}>'.format(self.title, self.url)
-
->>>>>>> aafe73ee198626047798ed04836a4120b329e4f8
+        return f'<News {self.title} {self.url}>'
