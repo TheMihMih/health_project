@@ -11,6 +11,18 @@
     <title>{{ page_title }}</title>
   </head>
   <body>
+    <div class="row">
+            <div class="col-6">
+                Health Project Navigate
+                <a href="/index"> Главная </a>
+                <a href="/about"> About </a>
+            </div>
+            <div class="col-6">
+                <a href="/login"> Login </a>
+                <a href="/register"> Sing Up </a>
+                <a href="/logout"> Logout </a>
+            </div>
+    </div>
     <div class="container">
     <h1>{{ page_title }}</h1>
     <div class="row">
@@ -38,6 +50,7 @@
               {{ form.password.label }}
               {{ form.password() }}
             </div>
+              {{ form.remember_me() }} {{ form.remember_me.label}}
               {{ form.submit }}
           </form>
         </div>

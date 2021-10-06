@@ -1,8 +1,10 @@
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash, redirect, url_for, request
+from create_user import create_and_add_user
 from webapp.config import SECRET_KEY
 from webapp.model import db, User
 from webapp.forms import LoginForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
+
 
 
 def create_app():
@@ -19,7 +21,7 @@ def create_app():
     def load_user(user_id):
         return User.query.get(user_id)
 
-    @app.route('/')
+    @app.route('/index')
     def index():
         page_title = "Главная страница"
         text = """Здесь будет какой-то текст! """
@@ -32,7 +34,7 @@ def create_app():
     def about():
         return render_template('about.html')
 
-    @app.route('/login')
+    @app.route('/login', methods = ['POST', 'GET'])
     def login():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
@@ -68,5 +70,18 @@ def create_app():
         
         else:
             return "У Вас нет прав доступа"
+
+    @app.route('/register')
+    def register():
+        if current_user.is_authenticated:
+            return redirect(url_for('index'))
+        username = request.args.get("usernamesignup")
+        email = request.args.get("emailsignup")
+        password1 = request.args.get("passwordsignup")
+        password2 = request.args.get("passwordsignup_confirm")
+        if password1 == password2:
+            password = password2
+        create_and_add_user(username, email, password)
+        return render_template('register.html')
 
     return app

@@ -1,0 +1,89 @@
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>{{ page_title }}</title>
+  </head>
+  <body>
+    <div class="row">
+        <div class="col-6">
+          Health Project Navigate
+          <a href="/index"> Главная </a>
+          <a href="/about"> About </a>
+        </div>
+        <div class="col-6">
+          <a href="/login"> Login </a>
+          <a href="/register"> Sing Up </a>
+          <a href="/logout"> Logout </a>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+              {% for message in messages %}
+                {{ message }}<br>
+              {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+      <div id="container_demo" >
+            <!-- спрятанный якорь, чтобы избежать прыжков http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
+            <a class="hiddenanchor" id="tosubscribe"></a>
+            <a class="hiddenanchor" id="tologin"></a>
+            <div id="wrapper">        
+                <div id="subscribe" class="animate form">
+                    <form  action="{{ url_for('register') }}" method="post, get" autocomplete="on">
+                        <h1> Sign up </h1>
+                        <p>
+                            <label for="usernamesignup" class="uname" data-icon="u"> Имя пользователя </label>
+                            <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="Пример_имени" />
+                        </p>
+                        <p>
+                            <label for="emailsignup" class="youmail" data-icon="e" > Ваш Email </label>
+                            <input id="emailsignup" name="emailsignup" required="required" type="text" placeholder="example@mail.com"/>
+                        </p>
+                        <p>
+                            <label for="passwordsignup" class="youpasswd" data-icon="p"> Ваш пароль </label>
+                            <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                        </p>
+                        <p>
+                            <label for="passwordsignup_confirm" class="youpasswd" data-icon="p"> Повторите Ваш пароль </label>
+                            <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                        </p>
+                        <p class="signin button">
+                            <input type="submit" value="Sign up"/>
+                        </p>
+                        <p class="change_link">
+                            Уже с нами?
+                            <a href="/login" class="to_subscribe"> Login </a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-4">
+        
+      </div>
+    </div>
+  </body>
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+
+</html>

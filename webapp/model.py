@@ -1,8 +1,24 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_security import RoleMixin
 
 db = SQLAlchemy()
+
+roles_users = db.Table(
+    'roles_users',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('role_id', db.Integer, db.ForeignKey('roles.id'))
+    )
+
+class Role(db.Model, RoleMixin):
+    __tablename__ = 'role'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True)
+    description = db.Column(db.String(255))
+
+    def __repr__(self):
+        return f"<Role - {self.name}>"
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

@@ -26,10 +26,10 @@ with app.app_context():
         print("Пароль не одинаковый!")
         sys.exit(0)
     
-    new_user = User(username=username, email=email, role='admin')
-    new_user.set_password(password1)
+    admin = User(username=username, email=email, role='admin')
+    admin.set_password(password1)
 
-    db.session.add(new_user)
+    db.session.add(admin)
     db.session.commit()
 
-    print(f"Создан пользователь с id={new_user.id}")
+    print(f"Создан пользователь с id={admin.id}")
