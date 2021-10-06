@@ -2,7 +2,7 @@ from flask import Flask, render_template, flash, redirect, url_for
 from webapp.config import SECRET_KEY
 from webapp.model import db, User
 from webapp.forms import LoginForm
-from flask_login import LoginManager, login_user, logout_user, current_user
+from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 
 
 def create_app():
@@ -34,7 +34,7 @@ def create_app():
 
     @app.route('/login')
     def login():
-        if current_user.is_authenticated():
+        if current_user.is_authenticated:
             return redirect(url_for('index'))
         page_title = "Авторизация"
         login_form = LoginForm()
@@ -59,5 +59,14 @@ def create_app():
         logout_user()
         flash("Вы успешно вышли с сайта")
         return redirect(url_for('index'))
+    
+    @app.route('/admin')
+    @login_required
+    def admin():
+        if current_user.is_admin:
+            return "Привет, Админ"
+        
+        else:
+            return "У Вас нет прав доступа"
 
     return app
