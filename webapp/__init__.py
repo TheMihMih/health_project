@@ -2,7 +2,7 @@ from flask import Flask, render_template, flash, redirect, url_for, request
 from create_user import create_and_add_user
 from webapp.config import SECRET_KEY
 from webapp.model import db, User
-from webapp.forms import LoginForm
+from webapp.forms import LoginForm, RegistrationForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 
 
@@ -71,17 +71,20 @@ def create_app():
         else:
             return "У Вас нет прав доступа"
 
-    @app.route('/register')
+    @app.route('/registr', methods=['POST', 'GET'])
     def register():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
+        form = RegistrationForm()
         username = request.args.get("usernamesignup")
         email = request.args.get("emailsignup")
         password1 = request.args.get("passwordsignup")
         password2 = request.args.get("passwordsignup_confirm")
         if password1 == password2:
             password = password2
-        create_and_add_user(username, email, password)
-        return render_template('register.html')
+        if username and password and email:
+            create_and_add_user(username, email, password)
+            return redirect(url_for('register'))
+        return render_template("registr.html", form=form)
 
     return app
