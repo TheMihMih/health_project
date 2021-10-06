@@ -1,37 +1,25 @@
-<!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    
-        <title>{{ page_title }}</title>
-    </head>
-    <body>
-        <div class="row">
-            <div class="col-6">
-                Health Project Navigate
-                <a href="/index"> Главная </a>
-                <a href="/about"> About </a>
-            </div>
-            <div class="col-6">
-                <a href="/login"> Login </a>
-                <a href="/register"> Sing Up </a>
-                <a href="/logout"> Logout </a>
-            </div>
-        </div>
-        <h1>Веб-ассистент для поддержания здорового образа жизни.</h1>
-        <div class="container">
-            <ol>
-                <li>Ассистент персоналисируется и выдает индивидуальные рекомендации. </li>
-                <li>Предоставляет возможность мониторинга: веса, потребленных и потраченных калорий, выпитой воды. </li>
-                <li>Дает советы по меню и режиму дня.</li>
-                <li>Показывает примеры тренировочных программ для различных цедей (похудение, набор мышечной массы).</li>
-                <li>Показывает новости и статьи по теме: ЗОЖ.</li>
-            </ol>
-        </div>   
-    </body>
-</html>
+{% extends 'base.html'%}
+
+{% block title%}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block body%}
+
+<h1>Веб-ассистент для поддержания здорового образа жизни.</h1>
+<div class="container">
+    <ol>
+        <li>Ассистент персоналисируется и выдает индивидуальные рекомендации. </li>
+        <li>Предоставляет возможность мониторинга: веса, потребленных и потраченных калорий, выпитой воды. </li>
+        <li>Дает советы по меню и режиму дня.</li>
+        <li>Показывает примеры тренировочных программ для различных цедей (похудение, набор мышечной массы).</li>
+        <li>Показывает новости и статьи по теме: ЗОЖ.</li>
+    </ol>
+</div>
+
+{% endblock %}
+
+        
+        

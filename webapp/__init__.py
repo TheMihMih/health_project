@@ -21,18 +21,20 @@ def create_app():
     def load_user(user_id):
         return User.query.get(user_id)
 
+    @app.route('/')
     @app.route('/index')
     def index():
         page_title = "Главная страница"
-        text = """Здесь будет какой-то текст! """
-        text2 = """Здесь будет еще какой-то текст! """
+        text = """Мы рады Вас приветствовать на нашем сайте """
+        text2 = """Здесь будет интересный блок """
         return render_template(
             'index.html', page_title=page_title, text=text, text2=text2
         )
         
     @app.route('/about')
     def about():
-        return render_template('about.html')
+        page_title = "Наш проект"
+        return render_template('about.html', page_title=page_title)
 
     @app.route('/login', methods = ['POST', 'GET'])
     def login():
