@@ -72,10 +72,10 @@ def create_app():
             return "У Вас нет прав доступа"
 
     @app.route('/registr', methods=['POST', 'GET'])
-    def register():
+    def registr():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
-        form = RegistrationForm()
+        reg_form = RegistrationForm()
         username = request.args.get("usernamesignup")
         email = request.args.get("emailsignup")
         password1 = request.args.get("passwordsignup")
@@ -84,7 +84,6 @@ def create_app():
             password = password2
         if username and password and email:
             create_and_add_user(username, email, password)
-            return redirect(url_for('register'))
-        return render_template("registr.html", form=form)
+        return render_template("registr.html", form=reg_form)
 
     return app
