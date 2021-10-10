@@ -23,10 +23,9 @@ class User(db.Model, UserMixin):
 class BDConnector(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
-    url = db.Column(db.String, unique=True, nullable=False)
     text = db.Column(db.Text, nullable=True)
-    category = db.Column(db.Integer, nullable=True) #Какие категории? Спорт, питание... Возможно стоит сделать не Int, а String
-    published = db.Column(db.DateTime, nullable=False)
+    category = db.Column(db.String, nullable=True) #Какие категории? Спорт, питание... Возможно стоит сделать не Int, а String
+
     
     def __repr__(self):
-        return f'<News {self.title} {self.url}>'
+        return f'<News {self.title} {self.category}>'
