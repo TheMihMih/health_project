@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+
+{% block title%}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block body%}
+
+</div>
+    <div class="row">
+      <div class="col-8">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+              {% for message in messages %}
+                {{ message }}<br>
+              {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+      <div id="container_demo" >
+            <!-- спрятанный якорь, чтобы избежать прыжков http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
+            <a class="hiddenanchor" id="tosubscribe"></a>
+            <a class="hiddenanchor" id="tologin"></a>
+            <div id="wrapper">        
+                <div id="subscribe" class="animate form">
+                    <form  action="" method="post, get" autocomplete="on">
+                        <h1> Регистрация </h1>
+                        <p>
+                            <label for="usernamesignup" class="uname" data-icon="u"> Имя пользователя </label>
+                            <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="Пример имени" />
+                        </p>
+                        <p>
+                            <label for="emailsignup" class="youmail" data-icon="e" > Ваш Email </label>
+                            <input id="emailsignup" name="emailsignup" required="required" type="text" placeholder="example@mail.com"/>
+                        </p>
+                        <p>
+                            <label for="passwordsignup" class="youpasswd" data-icon="p"> Ваш пароль </label>
+                            <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                        </p>
+                        <p>
+                            <label for="passwordsignup_confirm" class="youpasswd" data-icon="p"> Повторите Ваш пароль </label>
+                            <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                        </p>
+                        <p class="signin button">
+                            <input type="submit" value="Регистрация"/>
+                        </p>
+                        <p class="change_link">
+                            Уже с нами?
+                            <a href="/login" class="to_subscribe"> Вход </a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        
+      </div>
+    </div>
+</div>
+{% endblock %}
