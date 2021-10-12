@@ -29,27 +29,18 @@
         </form>
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Вход</button>
-          <button type="button" class="btn btn-outline-light me-2">Выход</button>
-          <button type="button" class="btn btn-warning">Регистрация</button>
+          <form>
+            <button type="submit" formaction="/login" class="btn btn-outline-light me-2">Вход</button>
+            <button type="submit" formaction="/logout" class="btn btn-outline-light me-2">Выход</button>
+            <button type="submit" formaction="/registr"class="btn btn-warning">Регистрация</button>
+          </form>
         </div>
       </div>
     </div>
     </header>
-    <div class="row">
-        <div class="col-6">
-            
-        </div>
-        
-        <div class="col-6">
-            <a href="/login"> Вход </a>
-            <a href="/logout"> Выход </a>
-            <a href="/registr"> Регистрация </a>
-        </div>
-    </div>
     
     <div class="b-example-divider"></div>
-
+    <div class="container">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
           <div class="alert alert-warning" role="alert">
@@ -61,7 +52,7 @@
       {% endwith %}
 
     {% block body%}{% endblock %}
-
+    </div>
     <div class="b-example-divider"></div>
   
     <div class="container">

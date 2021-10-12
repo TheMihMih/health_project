@@ -8,19 +8,9 @@
 
 {% block body%}
 
-</div>
+<div>
     <div class="row">
-      <div class="col-8">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <div class="alert alert-warning" role="alert">
-              {% for message in messages %}
-                {{ message }}<br>
-              {% endfor %}
-            </div>
-            {% endif %}
-        {% endwith %}
-      <div id="container_demo" >
+        <div id="container_demo" >
             <!-- спрятанный якорь, чтобы избежать прыжков http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
             <a class="hiddenanchor" id="tosubscribe"></a>
             <a class="hiddenanchor" id="tologin"></a>
@@ -55,11 +45,6 @@
                 </div>
             </div>
         </div>
-      </div>
-
-      <div class="col-4">
-        
-      </div>
     </div>
 </div>
 {% endblock %}
