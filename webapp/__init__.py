@@ -24,6 +24,7 @@ def create_app():
     @app.route('/')
     @app.route('/index')
     def index():
+        
         page_title = "Главная страница"
         text = """Мы рады Вас приветствовать на нашем сайте """
         text2 = """Здесь будет интересный блок """
