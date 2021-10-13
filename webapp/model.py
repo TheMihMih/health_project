@@ -47,18 +47,16 @@ class BDConnector(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     text = db.Column(db.Text, nullable=True)
-<<<<<<< HEAD
+
     category = db.Column(
         db.Integer, nullable=True
     )  # Какие категории? Спорт, питание... Возможно стоит сделать не Int, а String
+
     published = db.Column(db.DateTime, nullable=False)
 
-    def __repr__(self):
-        return f"<News {self.title} {self.url}>"
-=======
-    category = db.Column(db.String, nullable=True) #Какие категории? Спорт, питание... Возможно стоит сделать не Int, а String
+    category = db.Column(
+        db.String, nullable=True
+    )  # Какие категории? Спорт, питание... Возможно стоит сделать не Int, а String
 
-    
     def __repr__(self):
-        return f'<News {self.title} {self.category}>'
->>>>>>> b527cc67422bd78f321ba4e43de9f2ec3d51f904
+        return f"<News {self.title} {self.category}>"

@@ -34,8 +34,10 @@
               {{ form.password.label }}
               {{ form.password() }}
             </div>
-              {{ form.remember_me() }} {{ form.remember_me.label}}
+            <div class="mb-3 form-check"> 
+              {{ form.remember_me() }} {{ form.remember_me.label(class_='form-check-label') }}
               {{ form.submit }}
+            </div>
           </form>
     </div>
     <div class="col-8">

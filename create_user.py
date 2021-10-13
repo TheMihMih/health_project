@@ -1,5 +1,4 @@
-from flask.helpers import flash, url_for
-from werkzeug.utils import redirect
+from flask.helpers import flash
 from webapp.model import db, User
 
 def create_and_add_user(username, email, password):
