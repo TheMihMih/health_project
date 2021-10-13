@@ -1,18 +1,15 @@
-<<<<<<< HEAD
+
 from flask import Flask, render_template, flash, redirect, url_for, request
 from create_user import create_and_add_user
-from webapp.config import SECRET_KEY
 from webapp.model import db, User
 from webapp.forms import LoginForm, RegistrationForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 
-=======
 from flask import Flask, render_template, flash, redirect, url_for
 
 from webapp.model import db, User, BDConnector
 from webapp.forms import LoginForm, NewsForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
->>>>>>> b527cc67422bd78f321ba4e43de9f2ec3d51f904
 
 
 def create_app():
@@ -44,12 +41,8 @@ def create_app():
         page_title = "Наш проект"
         return render_template('about.html', page_title=page_title)
 
-<<<<<<< HEAD
-    @app.route('/login', methods = ['POST', 'GET'])
-=======
 
-    @app.route('/login')
->>>>>>> b527cc67422bd78f321ba4e43de9f2ec3d51f904
+    @app.route('/login', methods = ['POST', 'GET'])
     def login():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
