@@ -14,38 +14,38 @@
     <div class="container">
     <h1>{{ page_title }}</h1>
     <div class="row">
-        <div class="col-4">
-          {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <div class="alert alert-warning" role="alert">
-              {% for message in messages %}
-                {{ message }}<br>
-              {% endfor %}
-            </div>
-            {% endif %}
-          {% endwith %}
-          <form action="{{ url_for('process_login') }}" method="post">
-            {{ form.hidden_tag() }}
-            <div class="mb-3">
-              {{ form.username.label }}
-              {{ form.username() }}
-            </div>
-            <div class="mb-3">
-              {{ form.email.label }}
-              {{ form.email() }}
-            </div>
-            <div class="mb-3">
-              {{ form.password.label }}
-              {{ form.password() }}
-            </div>
-              {{ form.submit }}
-          </form>
-        </div>
-        <div class="col-8">
+      <div class="col-4">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          <div class="alert alert-warning" role="alert">
+            {% for message in messages %}
+              {{ message }}<br>
+            {% endfor %}
+          </div>
+          {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('process_login') }}" method="post">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            {{ form.username.label }}
+            {{ form.username() }}
+          </div>
+          <div class="mb-3">
+            {{ form.email.label }}
+            {{ form.email() }}
+          </div>
+          <div class="mb-3">
+            {{ form.password.label }}
+            {{ form.password() }}
+          </div>
+            {{ form.submit }}
+        </form>
+      </div>
+      <div class="col-8">
 
-        </div>
-    </div>
-    </div>
+      </div>
+  </div>
+  </div>
   </body>
 <!-- Optional JavaScript; choose one of the two! -->
 
