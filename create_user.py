@@ -1,5 +1,6 @@
 from flask.helpers import flash
-from webapp.model import db, User
+from webapp.db import db
+from webapp.user.models import User
 
 def create_and_add_user(username, email, password):
     user = User.query.filter(User.username == username).count()
