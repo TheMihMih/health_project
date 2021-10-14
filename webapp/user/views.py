@@ -14,7 +14,7 @@ def login():
         return redirect(url_for('news.index'))
     title = "Авторизация"
     login_form = LoginForm()
-    return render_template('login.html', page_title=title, form=login_form)
+    return render_template('user/login.html', page_title=title, form=login_form)
 
 @blueprint.route('/process-login', methods=['POST'])
 def process_login():
@@ -49,4 +49,4 @@ def registr():
         password = password2
     if username and password and email:
         create_and_add_user(username, email, password)
-    return render_template("registr.html", form=reg_form)
+    return render_template("user/registr.html", form=reg_form)
