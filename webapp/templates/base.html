@@ -34,7 +34,11 @@
               <button type="submit" formaction="/users/login" class="btn btn-outline-light me-2">Вход</button>
               <button type="submit" formaction="/users/registr"class="btn btn-warning">Регистрация</button>
             {% endif %}
-            
+
+            {% if user.is_admin %}
+              <button type="submit" formaction="/admin/create_news"class="btn btn-info">Добавить новость</button>
+            {% endif %}
+
             {% if user.is_authenticated %}
               <button type="submit" formaction="/users/logout" class="btn btn-outline-light me-2">Выход</button>
             {% endif %}
@@ -82,6 +86,7 @@
         </ul>
       </footer>
     </div>
-
+<script type="text/javascript" src="https://unpkg.com/popper.js"></script>
+<script type="text/javascript" src="https://unpkg.com/tooltip.js"></script>
 </body>
 </html>
