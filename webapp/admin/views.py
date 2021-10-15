@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, redirect, url_for, render_template
+from flask_login import current_user
 
 from webapp.db import db
 
@@ -17,7 +18,8 @@ blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 def admin():
     page_title = "Панель управления"
     text = "Контент админки"
-    return render_template("admin/index.html", page_title=page_title, text=text)
+    user = current_user
+    return render_template("admin/index.html", page_title=page_title, text=text, user=user)
 
 
 @blueprint.route("/process_creating_news", methods=["POST"])
@@ -52,4 +54,5 @@ def process_creating_news():
 def create_news():
     title = "Добавление новостей"
     form = NewsForm()
-    return render_template("admin/create_news.html", page_title=title, form=form)
+    user = current_user
+    return render_template("admin/create_news.html", page_title=title, form=form, user=user)

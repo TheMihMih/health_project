@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from flask_login import current_user
 from webapp.news.models import BDConnector
 
 blueprint = Blueprint("news", __name__)
@@ -7,17 +8,18 @@ blueprint = Blueprint("news", __name__)
 @blueprint.route("/")
 @blueprint.route("/index")
 def index():
-
     page_title = "Главная страница"
     text = """Мы рады Вас приветствовать на нашем сайте """
     text2 = """Здесь будет интересный блок """
-    return render_template("news/index.html", page_title=page_title, text=text, text2=text2)
+    user = current_user
+    return render_template("news/index.html", page_title=page_title, text=text, text2=text2, user=user)
 
 
 @blueprint.route("/about")
 def about():
     page_title = "Наш проект"
-    return render_template("news/about.html", page_title=page_title)
+    user = current_user
+    return render_template("news/about.html", page_title=page_title, user=user)
 
 
 @blueprint.route("/news")
