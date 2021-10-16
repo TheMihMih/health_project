@@ -18,7 +18,9 @@ class LoginForm(FlaskForm):
         "Пароль", validators=[DataRequired()], render_kw={"class": "form-control"}
     )
 
-    remember_me = BooleanField("Remember Me",default=True , render_kw={"class": "form-check-input"})
+    remember_me = BooleanField(
+        "Remember Me", default=True, render_kw={"class": "form-check-input"}
+    )
 
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 

@@ -18,8 +18,9 @@ blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 def admin():
     page_title = "Панель управления"
     text = "Контент админки"
-    user = current_user
-    return render_template("admin/index.html", page_title=page_title, text=text, user=user)
+    return render_template(
+        "admin/index.html", page_title=page_title, text=text, user=current_user
+    )
 
 
 @blueprint.route("/process_creating_news", methods=["POST"])
@@ -44,7 +45,7 @@ def process_creating_news():
             db.session.commit()
             flash("Вы успешно добавили новость в базу")
             return redirect(url_for("news.index"))
-    
+
     flash("Заполните все поля")
     return redirect(url_for("admin.create_news"))
 
@@ -54,5 +55,6 @@ def process_creating_news():
 def create_news():
     title = "Добавление новостей"
     form = NewsForm()
-    user = current_user
-    return render_template("admin/create_news.html", page_title=title, form=form, user=user)
+    return render_template(
+        "admin/create_news.html", page_title=title, form=form, user=current_user
+    )
