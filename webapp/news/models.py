@@ -5,6 +5,7 @@ class BDConnector(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     text = db.Column(db.Text, nullable=True)
+    image = db.Column(db.BLOB, nullable=True)
 
     published = db.Column(db.DateTime, nullable=False)
 
