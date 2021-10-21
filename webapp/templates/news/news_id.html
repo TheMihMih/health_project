@@ -14,6 +14,9 @@
       <h1>{{ news_context.title }}</h1>
         <h5>{{ news_context.category }}</h5>
         {{ news_context.text }}
+        {% if news_context.image %}
+          <img class="asd" src="{{ url_for('get_image', img_id=news_context.id) }}"  width="800" height="800">
+        {% endif %}
   </div>
 </div>
 

@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, Response
 from flask_login import current_user
 from webapp.news.models import BDConnector
+from PIL import Image 
+from io import BytesIO
 
 blueprint = Blueprint("news", __name__)
 
@@ -45,3 +47,16 @@ def news(news_id):
         news_context=news_context,
         user=current_user,
     )
+
+
+@blueprint.route('/img/<int:img_id>')
+def get_image(img_id):
+    news_img = BDConnector.query.filter(BDConnector.id == img_id).first()
+    if news_img.image:
+        image = Image.open(BytesIO(news_img.image))
+        output = BytesIO()
+        image.save(output, "PNG")
+        contents = output.getvalue()
+        output.close()
+
+        return Response(contents, mimetype='image/png')

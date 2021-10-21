@@ -10,7 +10,7 @@ class BDConnector(db.Model):
 
     category = db.Column(
         db.String, nullable=True
-    )  # Какие категории? Спорт, питание... Возможно стоит сделать не Int, а String
+    ) 
 
     def __repr__(self):
         return f"<News {self.title} {self.category}>"

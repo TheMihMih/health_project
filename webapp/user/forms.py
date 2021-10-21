@@ -1,10 +1,5 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-<<<<<<< HEAD:webapp/forms.py
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField
-from flask_wtf.file import FileField, FileRequired, FileAllowed
-=======
->>>>>>> 5a0f735b815e07ba5d6bae10790607a8663cf00f:webapp/user/forms.py
 from wtforms.validators import DataRequired
 
 
