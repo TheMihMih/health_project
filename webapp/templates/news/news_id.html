@@ -15,7 +15,7 @@
             <h5>{{ news_context.category }}</h5>
             {{ news_context.text }}<br>
             {% if news_context.image %}
-              <img class="asd" src="{{ url_for('news.get_image', img_id=news_context.id) }}"  width="800" height="800">
+              <img class="ImageDrawer" src="{{ url_for('news.get_image', img_id=news_context.id) }}"  width="800" height="800">
             {% endif %}
       </div>
     </div>

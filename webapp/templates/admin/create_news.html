@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-8">
-      <form action="{{ url_for('admin.process_creating_news') }}"  method="POST">
+      <form action="{{ url_for('admin.process_creating_news') }}" enctype="multipart/form-data" method="POST">
         {{ form.hidden_tag() }}
         <div class="mb-3">
           {{ form.news_title.label }}
@@ -24,7 +24,7 @@
           {{ form.news_text.label }}
           {{ form.news_text(rows='20') }}
         </div>   
-        <div class="mb-3" enctype="multipart/form-data">
+        <div class="mb-3">
           {{ form.news_image.label }}
           {{ form.news_image() }}
         </div>

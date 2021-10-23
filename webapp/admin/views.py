@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, url_for, render_template
+from flask import Blueprint, flash, redirect, url_for, render_template, request
 from flask_login import current_user
 
 from webapp.db import db
@@ -35,11 +35,13 @@ def process_creating_news():
             flash("Данная новость уже существует в базе")
             return redirect(url_for("admin.create_news"))
         else:
+            image_data = request.files[form.news_image.name].read()
             new_news = BDConnector(
                 title=form.news_title.data,
                 category=form.news_category.data,
                 text=form.news_text.data,
-                published=datetime.now(),
+                image = image_data,
+                published=datetime.now()    
             )
             db.session.add(new_news)
             db.session.commit()
