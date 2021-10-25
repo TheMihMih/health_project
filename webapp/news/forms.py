@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import StringField, SubmitField, TextAreaField, FileField
+from wtforms import StringField, SubmitField, TextAreaField, FileField, SelectField
 from wtforms.validators import DataRequired 
 
 
@@ -13,10 +13,10 @@ class NewsForm(FlaskForm):
     news_text = TextAreaField(
         "Текст статьи", validators=[DataRequired()], render_kw={"class": "form-control"}
     )
-    news_category = StringField(
-        "Категория новости",
-        validators=[DataRequired()],
-        render_kw={"class": "form-control"},
+    news_category = SelectField(
+        'Выберите категорию',
+         choices=[('Питание'), ('Тренировки'), ('Новости')],
+         render_kw={"class": "form-select"}
     )
     news_image = FileField(
         'Добавьте изображение',
