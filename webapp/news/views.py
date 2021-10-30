@@ -1,8 +1,5 @@
-from re import search
 from flask import Blueprint, render_template, Response, flash, request
-from flask.helpers import url_for
 from flask_login import current_user
-from werkzeug.utils import redirect
 from webapp.news.forms import SearchForm
 from webapp.news.models import BDConnector
 from PIL import Image 
