@@ -10,6 +10,14 @@
 
 <div class="container">
 <h1>Новости ЗОЖ</h1>
+    <form action="{{ url_for('news.process_searching_news') }}" enctype="multipart/form-data" method="GET">
+        <div class="input-group mb-3">
+            <div class="col-4">
+                {{ form.search_news() }}
+            </div>
+            {{ form.submit() }}
+        </div>  
+    </form>
     <div class="row">
         <div class="col-8">     
             {% for news in news_list %}
@@ -17,9 +25,9 @@
                 <b>{{ news.category }}</b><br>
                 <hr />
             {% endfor %}
-        </form>
         </div>
     </div>
+
 </div>
 
 {% endblock %}

@@ -1,5 +1,9 @@
-from flask import Blueprint, render_template, Response, flash
+from re import search
+from flask import Blueprint, render_template, Response, flash, request
+from flask.helpers import url_for
 from flask_login import current_user
+from werkzeug.utils import redirect
+from webapp.news.forms import SearchForm
 from webapp.news.models import BDConnector
 from PIL import Image 
 from io import BytesIO
@@ -30,11 +34,32 @@ def about():
 
 @blueprint.route("/news")
 def display_news():
+    form = SearchForm()
     title = "Новости Python"
     news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
     return render_template(
-        "news/news.html", page_title=title, news_list=news_list, user=current_user
+        "news/news.html", page_title=title, form=form, news_list=news_list, user=current_user
     )
+
+
+@blueprint.route("/process_searching_news", methods=["GET"])
+def process_searching_news():
+    form = SearchForm()
+    title = "Новости Python"
+    search_title = request.values[form.search_news.name]
+    if form.validate_on_submit:
+        news_exists = BDConnector.query.filter(BDConnector.title ==search_title).all()
+        if news_exists:
+            return render_template(
+                "news/news.html", page_title=title, form=form, news_list=news_exists, user=current_user
+            )
+        flash('Новость не найдена')
+        news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+        return render_template(
+            "news/news.html", page_title=title, form=form, news_list=news_list, user=current_user
+        )
+
+
 
 
 @blueprint.route("/news/<int:news_id>", methods=["GET"])

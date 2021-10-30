@@ -24,3 +24,15 @@ class NewsForm(FlaskForm):
         render_kw={"class": "form-control"}
     )
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
+
+
+class SearchForm(FlaskForm):
+    search_news = StringField(
+        'Поиск новостей',
+        render_kw={"class": "form-control", "placeholder": "Поиск новостей"},
+        )
+    submit = SubmitField("Поиск", render_kw={"class": "btn btn-outline-secondary"})
+
+
+
+
