@@ -4,6 +4,7 @@ from webapp.news.forms import SearchForm
 from webapp.news.models import BDConnector
 from PIL import Image 
 from io import BytesIO
+from fuzzywuzzy import fuzz
 
 blueprint = Blueprint("news", __name__)
 
@@ -44,14 +45,18 @@ def process_searching_news():
     form = SearchForm()
     title = "Новости Python"
     search_title = request.values[form.search_news.name]
+    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+    news_exists = []
     if form.validate_on_submit:
-        news_exists = BDConnector.query.filter(BDConnector.title ==search_title).all()
+        for news in news_list:
+            Ratio = fuzz.token_sort_ratio(news.title, search_title)
+            if Ratio >= 50:
+                news_exists += BDConnector.query.filter(BDConnector.title == news.title).all()
         if news_exists:
             return render_template(
                 "news/news.html", page_title=title, form=form, news_list=news_exists, user=current_user
             )
-        flash('Новость не найдена')
-        news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+        flash('Новость не найдена, попробуйте изменить запрос')
         return render_template(
             "news/news.html", page_title=title, form=form, news_list=news_list, user=current_user
         )
