@@ -32,7 +32,3 @@ class SearchForm(FlaskForm):
         render_kw={"class": "form-control", "placeholder": "Поиск новостей"},
         )
     submit = SubmitField("Поиск", render_kw={"class": "btn btn-outline-secondary"})
-
-
-
-

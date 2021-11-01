@@ -62,8 +62,6 @@ def process_searching_news():
         )
 
 
-
-
 @blueprint.route("/news/<int:news_id>", methods=["GET"])
 def news(news_id):
     news_context = BDConnector.query.filter(BDConnector.id == news_id).first()
