@@ -21,10 +21,10 @@ class LoginForm(FlaskForm):
     )
 
     remember_me = BooleanField(
-        "Remember Me", default=True, render_kw={"class": "form-check-input"}
+        "Запомнить меня", default=True, render_kw={"class": "form-check-input"}
     )
 
-    submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
+    submit = SubmitField("Войти", render_kw={"class": "btn btn-primary"})
 
 
 class RegistrationForm(FlaskForm):
@@ -48,7 +48,7 @@ class RegistrationForm(FlaskForm):
         render_kw={"class": "form-control"},
     )
 
-    submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
+    submit = SubmitField("Зарегистрироваться", render_kw={"class": "btn btn-primary"})
 
     def validate_username(self, username):
         users_count = User.query.filter_by(username=username.data).count()
