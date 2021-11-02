@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, Response, flash
+from flask import Blueprint, render_template, Response, flash, request
 from flask_login import current_user
+from webapp.news.forms import SearchForm
 from webapp.news.models import BDConnector
 from PIL import Image 
 from io import BytesIO
+from fuzzywuzzy import fuzz
 
 blueprint = Blueprint("news", __name__)
 
@@ -30,11 +32,34 @@ def about():
 
 @blueprint.route("/news")
 def display_news():
+    form = SearchForm()
     title = "Новости Python"
     news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
     return render_template(
-        "news/news.html", page_title=title, news_list=news_list, user=current_user
+        "news/news.html", page_title=title, form=form, news_list=news_list, user=current_user
     )
+
+
+@blueprint.route("/process_searching_news", methods=["GET"])
+def process_searching_news():
+    form = SearchForm()
+    title = "Новости Python"
+    search_title = request.values[form.search_news.name]
+    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+    news_exists = []
+    if form.validate_on_submit:
+        for news in news_list:
+            Ratio = fuzz.token_sort_ratio(news.title, search_title)
+            if Ratio >= 50:
+                news_exists += BDConnector.query.filter(BDConnector.title == news.title).all()
+        if news_exists:
+            return render_template(
+                "news/news.html", page_title=title, form=form, news_list=news_exists, user=current_user
+            )
+        flash('Новость не найдена, попробуйте изменить запрос')
+        return render_template(
+            "news/news.html", page_title=title, form=form, news_list=news_list, user=current_user
+        )
 
 
 @blueprint.route("/news/<int:news_id>", methods=["GET"])
