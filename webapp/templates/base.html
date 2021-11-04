@@ -30,11 +30,11 @@
 
         <div class="text-end">
           <form>
-            {% if user.is_admin %}
-              <button type="submit" formaction="/admin/create_news"class="btn btn-info">Добавить новость</button>
-            {% endif %}
-
             {% if user.is_authenticated %}
+              {% if user.is_admin %}
+                <button type="submit" formaction="/admin/create_news"class="btn btn-info">Добавить новость</button>
+                <button type="submit" formaction="/admin"class="btn btn-secondary">Админка</button>
+              {% endif %}
               <button type="submit" formaction="/users/logout" class="btn btn-outline-light me-2">Выход</button>
             {% else %}
               <button type="submit" formaction="/users/login" class="btn btn-outline-light me-2">Вход</button>
@@ -50,7 +50,9 @@
 
     <div class="container">
 
-    {% include 'menu.html'%}
+      {% if user.is_authenticated %}
+        {% include 'menu.html'%}
+      {% endif %}
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
