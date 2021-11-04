@@ -30,17 +30,15 @@
 
         <div class="text-end">
           <form>
-            {% if not user.is_authenticated %}
-              <button type="submit" formaction="/users/login" class="btn btn-outline-light me-2">Вход</button>
-              <button type="submit" formaction="/users/registr"class="btn btn-warning">Регистрация</button>
-            {% endif %}
-
             {% if user.is_admin %}
               <button type="submit" formaction="/admin/create_news"class="btn btn-info">Добавить новость</button>
             {% endif %}
 
             {% if user.is_authenticated %}
               <button type="submit" formaction="/users/logout" class="btn btn-outline-light me-2">Выход</button>
+            {% else %}
+              <button type="submit" formaction="/users/login" class="btn btn-outline-light me-2">Вход</button>
+              <button type="submit" formaction="/users/registr"class="btn btn-warning">Регистрация</button>
             {% endif %}
           </form>
         </div>

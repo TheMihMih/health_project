@@ -12,10 +12,6 @@ class LoginForm(FlaskForm):
         render_kw={"class": "form-control"},
     )
 
-    email = StringField(
-        "Email", validators=[DataRequired(), Email()], render_kw={"class": "form-control"}
-    )
-
     password = PasswordField(
         "Пароль", validators=[DataRequired()], render_kw={"class": "form-control"}
     )
