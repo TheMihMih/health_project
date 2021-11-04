@@ -16,9 +16,9 @@ def get_html(url):
         print("Сетевая ошибка")
         return False
 
-def save_news(title, text, category):
+def save_news(title, text, category, url):
     news_exist = BDConnector.query.filter(BDConnector.title == title).count()
     if not news_exist:
-        new_news = BDConnector(title=title, text=text, publised=datetime.now(), category=category)
+        new_news = BDConnector(title=title, text=text, publised=datetime.now(), category=category, url=url)
         db.session.add(new_news)
         db.session.commit()
