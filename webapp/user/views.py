@@ -1,10 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_user, logout_user
 
+from webapp.db import db
 from webapp.user.models import User
 from webapp.user.forms import RegistrationForm, LoginForm
-
-from create_user import create_and_add_user
 
 blueprint = Blueprint("user", __name__, url_prefix="/users")
 
@@ -15,10 +14,9 @@ def login():
         return redirect(url_for("news.index"))
     title = "Авторизация"
     login_form = LoginForm()
-    user = current_user
+    
     return render_template(
-        "user/login.html", page_title=title, form=login_form, user=user
-    )
+        "user/login.html", page_title=title, form=login_form, user=current_user)
 
 
 @blueprint.route("/process-login", methods=["POST"])
@@ -48,12 +46,21 @@ def registr():
     if current_user.is_authenticated:
         return redirect(url_for("news.index"))
     reg_form = RegistrationForm()
-    username = request.args.get("usernamesignup")
-    email = request.args.get("emailsignup")
-    password1 = request.args.get("passwordsignup")
-    password2 = request.args.get("passwordsignup_confirm")
-    if password1 == password2:
-        password = password2
-    if username and password and email:
-        create_and_add_user(username, email, password)
-    return render_template("user/registr.html", form=reg_form, user=current_user)
+    title = "Регистрация"
+    return render_template("user/registr.html", form=reg_form, user=current_user, page_title=title)
+
+@blueprint.route("/process_reg", methods=["POST"])
+def process_reg():
+    reg_form = RegistrationForm()
+    if reg_form.validate_on_submit():
+        new_user = User(username=reg_form.username.data, email=reg_form.email.data)
+        new_user.set_password(reg_form.password2.data)
+        db.session.add(new_user)
+        db.session.commit()
+        flash(f"Успешная регистрация пользователя с именем - {reg_form.username.data}")
+        return redirect(url_for('user.login'))
+    else:
+        for field, errors in reg_form.errors.items():
+            for error in errors:
+                flash(f"Ошибка в {getattr(reg_form, field).label.text}: {error}")
+        return redirect(url_for('user.registr'))
