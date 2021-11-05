@@ -35,7 +35,7 @@ class FoodForm(FlaskForm):
 
 
 class UserFood(FlaskForm):
-    name = StringField(
+    food_name = StringField(
         "Название продукта",
         validators=[DataRequired()],
         render_kw={"class": "form-control"}

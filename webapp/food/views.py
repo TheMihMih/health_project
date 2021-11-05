@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, url_for, render_template
 from flask_login import current_user
-
+from datetime import date
 from webapp.db import db
 
 from webapp.food.forms import FoodForm, UserFood
@@ -54,3 +54,26 @@ def counter():
         "food/food_count.html", page_title=title, form=form, user=current_user
     )
 
+TODAY = date.today()
+
+@blueprint.route("/process_addind_calories")
+def process_addind_calories():
+    title = "Счетчик калорий"
+    form = UserFood()
+
+    if form.validate_on_submit():
+        product_consumed = BDFood.query.filter(BDFood.name_food == form.food_name.data).first()
+        weight_consumed = float(form.food_weight.data)
+        if product_consumed:
+            сalories_consumed = weight_consumed * float(product_consumed.calories)
+            proteins_consumed = weight_consumed * float(product_consumed.proteins)
+            fats_consumed = weight_consumed * float(product_consumed.fats)
+            сarbohydrates_consumed = weight_consumed * float(product_consumed.сarbohydrates)
+            
+
+            
+
+
+    return render_template(
+        "food/food_count.html", page_title=title, form=form, user=current_user
+    )
