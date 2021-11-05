@@ -34,7 +34,7 @@ def about():
 @blueprint.route("/news")
 def display_news():
     form = SearchForm()
-    title = "Новости Python"
+    title = "Новости"
     news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
     return render_template(
         "news/news.html",
@@ -104,7 +104,7 @@ def get_image(img_id):
 
 
 @blueprint.route("/category/<url>", methods=["GET"])
-def category_meal(url):
+def category(url):
     if url == "meal":
         category_list = db.session.query(BDConnector).filter(BDConnector.category == "Питание")
         page_title = "Новости про питание"
