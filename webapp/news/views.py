@@ -103,24 +103,18 @@ def get_image(img_id):
         return Response(contents, mimetype="image/png")
 
 
-@blueprint.route("/category_meal")
-def category_meal():
-    category_list = db.session.query(BDConnector).filter(BDConnector.category == "Питание")
-    page_title = "Новости про питание"
-    return render_template(
-        "news/category.html",
-        category_list=category_list,
-        page_title=page_title,
-        user=current_user
-    )
+@blueprint.route("/category/<url>", methods=["GET"])
+def category_meal(url):
+    if url == "meal":
+        category_list = db.session.query(BDConnector).filter(BDConnector.category == "Питание")
+        page_title = "Новости про питание"
+    elif url == "train":
+        category_list = db.session.query(BDConnector).filter(BDConnector.category == "Тренировки")
+        page_title = "Новости про тренировки"
 
-@blueprint.route("/category_train")
-def category_train():
-    category_list = db.session.query(BDConnector).filter(BDConnector.category == "Тренировки")
-    page_title = "Новости про тренировки"
     return render_template(
         "news/category.html",
         category_list=category_list,
         page_title=page_title,
         user=current_user
-    )
+        )
