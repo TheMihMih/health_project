@@ -9,8 +9,9 @@
 {% block body%}
 
 <div class="row">
-    <div class="col-8">
-      <form method="GET">
+  <div class="col-8">
+
+    <form action="{{ url_for('food.process_adding_calories') }}" method="GET">
         {{ form.hidden_tag() }}
         <div class="mb-3">
           {{ form.food_name.label }}
@@ -21,7 +22,16 @@
           {{ form.food_weight() }}
         </div>
         {{ form.submit() }}
-    </form>  
+    </form> 
+    <div class="text-end">
+      <form>
+          <button type="submit" formaction="/food/add_food" class="btn btn-info">Добавить продукт в базу</button>
+      </form>
+    </div>
+    <a>Сегодня вы потребили {{ daily_consumption[0] }} калорий</a><br>
+    <a>Белков: {{ daily_consumption[1] }}</a><br>
+    <a>Жиров: {{ daily_consumption[2] }}</a><br>
+    <a>Углеводов: {{ daily_consumption[3] }}</a>
   </div>
 </div>
 

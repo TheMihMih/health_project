@@ -38,15 +38,14 @@ class UserFood(FlaskForm):
     food_name = StringField(
         "Название продукта",
         validators=[DataRequired()],
-        render_kw={"class": "form-control"}
+        render_kw={"class": "form-control"},
     )
     food_weight = StringField(
         "Вес продукта",
         validators=[DataRequired()],
-        render_kw={"class": "form-control"}
+        render_kw={"class": "form-control"},
     )
-
     submit = SubmitField(
         "Отправить",
-        render_kw={"class": "btn btn-primary"}
+        render_kw={"class": "btn btn-secondary"}
     )
