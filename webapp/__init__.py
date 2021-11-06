@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_bootstrap import Bootstrap
 
 from webapp.user.models import User
 from webapp.user.views import blueprint as user_blueprint
@@ -17,6 +18,7 @@ def create_app():
     app.config.from_pyfile("config.py")
     db.init_app(app)
     migrate = Migrate(app, db)
+    bootstrap = Bootstrap(app)
 
     login_manager = LoginManager()
     login_manager.init_app(app)
