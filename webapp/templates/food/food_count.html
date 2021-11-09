@@ -4,9 +4,13 @@
 
 {{ page_title }}
 
+
+
+
 {% endblock %}
 
 {% block body%}
+
 
 <div class="row">
   <div class="col-8">
@@ -28,10 +32,23 @@
           <button type="submit" formaction="/food/add_food" class="btn btn-info">Добавить продукт в базу</button>
       </form>
     </div>
-    <a>Сегодня вы потребили {{ daily_consumption[0] }} калорий</a><br>
-    <a>Белков: {{ daily_consumption[1] }}</a><br>
-    <a>Жиров: {{ daily_consumption[2] }}</a><br>
-    <a>Углеводов: {{ daily_consumption[3] }}</a>
+    <form>
+      <div class="mb-3">
+
+          <a>Сегодня вы потребили {{ daily_consumption[0] }} калорий</a><br>
+          <a>Белков: {{ daily_consumption[1] }}</a><br>
+          <a>Жиров: {{ daily_consumption[2] }}</a><br>
+          <a>Углеводов: {{ daily_consumption[3] }}</a><br>
+      
+          {{ the_div|safe }}
+          <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.css" rel="stylesheet">
+          <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css" rel="stylesheet">
+          <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.js"></script>
+          <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.5.min.js"></script>
+          {{ the_script|safe }}
+      </div>
+    </form>
+   
   </div>
 </div>
 

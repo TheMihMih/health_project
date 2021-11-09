@@ -2,11 +2,15 @@ from flask import Blueprint, flash, redirect, url_for, render_template, request
 from flask_login import current_user
 from datetime import date
 
+
 from flask_login.utils import login_required
 from webapp.db import db
 
+
 from webapp.food.forms import FoodForm, UserFood
 from webapp.food.models import BDFood, DailyConsumption
+
+from webapp.food.utils import daily_counter, graph_maker
 
 
 blueprint = Blueprint("food", __name__, url_prefix="/food")
@@ -51,15 +55,22 @@ def add_food():
 
 
 @blueprint.route("/food_count")
+@login_required
 def food_count():
     title = "Счетчик калорий"
     form = UserFood()
     today = date.today().strftime("%d/%m/%Y")
     daily_consumption = daily_counter(today)
+    script, div = graph_maker()
     return render_template(
-        "food/food_count.html", page_title=title, form=form, daily_consumption=daily_consumption, user=current_user
+        "food/food_count.html", 
+        page_title=title, 
+        form=form, 
+        daily_consumption=daily_consumption, 
+        user=current_user,
+        the_div=div,
+        the_script=script
     )
-
 
 
 @blueprint.route("/process_adding_calories", methods=['GET'])
@@ -102,22 +113,4 @@ def process_adding_calories():
         return redirect(url_for("food.food_count"))
     #flash('form not validate')
     #return redirect(url_for("food.food_count"))
-
-
-def daily_counter(today):
-
-    daily_consumption = DailyConsumption.query.filter(
-    DailyConsumption.user_cons == current_user.id,
-    DailyConsumption.cons_day == today
-    ).all()
-    daily_consumption_cals = 0
-    daily_consumption_prots = 0
-    daily_consumption_fats = 0
-    daily_consumption_carbos = 0
-    for i in daily_consumption:
-        daily_consumption_cals += i.cons_calories
-        daily_consumption_prots += i.cons_prots
-        daily_consumption_fats += i.cons_fats
-        daily_consumption_carbos += i.cons_carbos
-    return daily_consumption_cals, daily_consumption_prots, daily_consumption_fats, daily_consumption_carbos
 

@@ -12,28 +12,19 @@ def page_changer():
             url =f"https://calorizator.ru/product/all&page={page}"
             html = get_html(url)
         if html:
-            parser_even(html)
-            parser_odd(html)
-
-
-def parser_even(html):            
-    soup = BeautifulSoup(html, 'html.parser')
-    all_food = soup.find(
-        'div', class_='view-product-all'
-    ).findAll(
-        'tr', class_='even'
-    )
-    food_finder(all_food)
-
-
-def parser_odd(html):            
-    soup = BeautifulSoup(html, 'html.parser')
-    all_food = soup.find(
-        'div', class_='view-product-all'
-    ).findAll(
-        'tr', class_='odd'
-    )
-    food_finder(all_food)
+            soup = BeautifulSoup(html, 'html.parser')
+            all_food_even = soup.find(
+                'div', class_='view-product-all'
+            ).findAll(
+                'tr', class_='even'
+            )
+            food_finder(all_food_even)
+            all_food_odd = soup.find(
+                'div', class_='view-product-all'
+            ).findAll(
+                'tr', class_='odd'
+            )
+            food_finder(all_food_odd)
 
 
 def food_finder(all_food):

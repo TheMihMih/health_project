@@ -14,10 +14,6 @@ class FoodForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
     )
-    food_joules = StringField(
-        "Название продукта",
-        render_kw={"class": "form-control"},
-    )
     food_proteins = StringField(
         "Содержание белков",
         render_kw={"class": "form-control"},
