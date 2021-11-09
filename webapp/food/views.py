@@ -78,7 +78,6 @@ def food_count():
 def process_adding_calories():
     form = UserFood()
     today = date.today().strftime("%d/%m/%Y")
-    #if form.validate_on_submit():
     food_consumed = BDFood.query.filter(BDFood.name_food == request.values[form.food_name.name]).first()
     weight_consumed = float(request.values[form.food_weight.name])
     if food_consumed:
@@ -88,7 +87,6 @@ def process_adding_calories():
         fats_consumed = weight_consumed * float(food_consumed.fats) * 0.01
         carbohydrates_consumed = weight_consumed * float(food_consumed.carbohydrates) * 0.01
         consumption_date = today
-
         new_consumption = DailyConsumption(
             user_cons=current_user.id,
             cons_product=product_consumed,
@@ -111,6 +109,3 @@ def process_adding_calories():
             f"Данный продукт отсутствует в базе. Попробуйте изменить запрос или добавьте продукт в базу"
         )
         return redirect(url_for("food.food_count"))
-    #flash('form not validate')
-    #return redirect(url_for("food.food_count"))
-

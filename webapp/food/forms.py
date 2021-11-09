@@ -15,15 +15,15 @@ class FoodForm(FlaskForm):
         render_kw={"class": "form-control"},
     )
     food_proteins = StringField(
-        "Содержание белков",
+        "Содержание белков, г.",
         render_kw={"class": "form-control"},
     )
     food_fats = StringField(
-        "Содержание жиров",
+        "Содержание жиров, г.",
         render_kw={"class": "form-control"},
     )   
     food_carbohydrates = StringField(
-        "Содержание углеводов",
+        "Содержание углеводов, г.",
         render_kw={"class": "form-control"},
     )   
         
@@ -37,7 +37,7 @@ class UserFood(FlaskForm):
         render_kw={"class": "form-control"},
     )
     food_weight = StringField(
-        "Вес продукта",
+        "Вес продукта, г.",
         validators=[DataRequired()],
         render_kw={"class": "form-control"},
     )
