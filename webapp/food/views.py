@@ -61,7 +61,7 @@ def food_count():
     form = UserFood()
     today = date.today().strftime("%d/%m/%Y")
     daily_consumption = daily_counter(today)
-    script, div = graph_maker()
+    script, div, data_check = graph_maker()
     return render_template(
         "food/food_count.html", 
         page_title=title, 
@@ -69,7 +69,8 @@ def food_count():
         daily_consumption=daily_consumption, 
         user=current_user,
         the_div=div,
-        the_script=script
+        the_script=script,
+        data_check=data_check
     )
 
 

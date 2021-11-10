@@ -39,13 +39,14 @@
           <a>Белков: {{ daily_consumption[1] }}г</a><br>
           <a>Жиров: {{ daily_consumption[2] }}г</a><br>
           <a>Углеводов: {{ daily_consumption[3] }}г</a><br>
-      
-          {{ the_div|safe }}
-          <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.css" rel="stylesheet">
-          <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css" rel="stylesheet">
-          <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.js"></script>
-          <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.5.min.js"></script>
-          {{ the_script|safe }}
+          {% if data_check == True %}
+            {{ the_div|safe }}
+            <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.css" rel="stylesheet">
+            <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css" rel="stylesheet">
+            <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.js"></script>
+            <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.5.min.js"></script>
+            {{ the_script|safe }}
+          {% endif %}
       </div>
     </form>
    

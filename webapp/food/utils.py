@@ -12,9 +12,9 @@ from webapp.food.models import DailyConsumption
 
 
 def daily_counter(today):
-
     daily_consumption = DailyConsumption.query.filter(
-    DailyConsumption.cons_day == today
+        DailyConsumption.user_cons == current_user.id,
+        DailyConsumption.cons_day == today
     ).all()
     daily_consumption_cals = 0
     daily_consumption_prots = 0
@@ -25,18 +25,20 @@ def daily_counter(today):
         daily_consumption_prots += i.cons_prots
         daily_consumption_fats += i.cons_fats
         daily_consumption_carbos += i.cons_carbos
+
     return daily_consumption_cals, daily_consumption_prots, daily_consumption_fats, daily_consumption_carbos
 
 
 
 def graph_maker():
     data = {"days": [], "calories": [], "prots": [], "fats": [], "carbos": []}
+    data_check = False
     for i in range(0, 3):
         day = date.today() - timedelta(days=i)
         day = day.strftime("%d/%m/%Y")
         consumption_data = daily_counter(day)
-        if consumption_data == None:
-            continue
+        if consumption_data[0] != 0:
+            data_check = True
         data['days'].append(day)
         data['calories'].append(consumption_data[0])
         data['prots'].append(consumption_data[1])
@@ -48,7 +50,7 @@ def graph_maker():
                             "calories", hover)
     script, div = components(plot)
 
-    return script, div
+    return script, div, data_check
 
 
 def create_bar_chart(data, x_name, y_name, hover_tool=None,

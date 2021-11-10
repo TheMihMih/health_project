@@ -14,19 +14,29 @@ blueprint = Blueprint("news", __name__)
 @blueprint.route("/index")
 def index():
     page_title = "Главная страница"
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).limit(5)
-    script, div = graph_maker()
     text = """Мы рады Вас приветствовать на нашем сайте """
     text2 = """Здесь будет интересный блок """
+    news_list = BDConnector.query.order_by(BDConnector.id.desc()).limit(5)
+    if current_user.is_authenticated:
+        script, div, data_check = graph_maker()
+        return render_template(
+            "news/index.html",
+            page_title=page_title,
+            text=text,
+            text2=text2,
+            user=current_user,
+            news_list=news_list,
+            the_script=script,
+            the_div=div,
+            data_check=data_check
+        )
     return render_template(
         "news/index.html",
         page_title=page_title,
         text=text,
         text2=text2,
         user=current_user,
-        news_list=news_list,
-        the_script=script,
-        the_div=div
+        news_list=news_list
     )
 
 
