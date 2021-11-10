@@ -14,7 +14,6 @@ from webapp.food.models import DailyConsumption
 def daily_counter(today):
 
     daily_consumption = DailyConsumption.query.filter(
-    DailyConsumption.user_cons == current_user.id,
     DailyConsumption.cons_day == today
     ).all()
     daily_consumption_cals = 0
