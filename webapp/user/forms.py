@@ -12,6 +12,15 @@ class LoginForm(FlaskForm):
         render_kw={"class": "form-control"},
     )
 
+<<<<<<< HEAD
+    email = StringField(
+        "Email",
+        validators=[DataRequired(), Email()],
+        render_kw={"class": "form-control"},
+    )
+
+=======
+>>>>>>> master
     password = PasswordField(
         "Пароль", validators=[DataRequired()], render_kw={"class": "form-control"}
     )
@@ -31,7 +40,9 @@ class RegistrationForm(FlaskForm):
     )
 
     email = StringField(
-        "Email", validators=[DataRequired(), Email()], render_kw={"class": "form-control"}
+        "Email",
+        validators=[DataRequired(), Email()],
+        render_kw={"class": "form-control"},
     )
 
     password1 = PasswordField(
@@ -50,7 +61,7 @@ class RegistrationForm(FlaskForm):
         users_count = User.query.filter_by(username=username.data).count()
         if users_count > 0:
             raise ValidationError("Пользователь с таким именем уже существует!!!")
-    
+
     def validate_email(self, email):
         users_count = User.query.filter_by(email=email.data).count()
         if users_count > 0:

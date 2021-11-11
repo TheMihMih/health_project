@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    {% for category in category_list %}
+        <h3><a href="/news/{{ category.id }}">{{ category.title }}</a></h3>
+        <p>{{ category.text }}</p>
+        <hr/>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

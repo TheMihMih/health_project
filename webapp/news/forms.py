@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, SubmitField, TextAreaField, FileField, SelectField
-from wtforms.validators import DataRequired 
+from wtforms.validators import DataRequired
 
 
 class NewsForm(FlaskForm):
@@ -14,21 +14,21 @@ class NewsForm(FlaskForm):
         "Текст статьи", validators=[DataRequired()], render_kw={"class": "form-control"}
     )
     news_category = SelectField(
-        'Выберите категорию',
-         choices=[('Питание'), ('Тренировки'), ('Новости')],
-         render_kw={"class": "form-select"}
+        "Выберите категорию",
+        choices=[("Питание"), ("Тренировки"), ("Новости")],
+        render_kw={"class": "form-select"},
     )
     news_image = FileField(
-        'Добавьте изображение',
-        validators=[FileAllowed(['jpg', 'png'])],
-        render_kw={"class": "form-control"}
+        "Добавьте изображение",
+        validators=[FileAllowed(["jpg", "png"])],
+        render_kw={"class": "form-control"},
     )
     submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
 
 class SearchForm(FlaskForm):
     search_news = StringField(
-        'Поиск новостей',
+        "Поиск новостей",
         render_kw={"class": "form-control", "placeholder": "Поиск новостей"},
-        )
+    )
     submit = SubmitField("Поиск", render_kw={"class": "btn btn-outline-secondary"})
