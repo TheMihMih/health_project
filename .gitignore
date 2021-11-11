@@ -4,4 +4,8 @@ __pycache__
 workshop.py
 .vscode
 webapp.db
+<<<<<<< HEAD
 webapp.db.old
+=======
+webapp.db.old
+>>>>>>> master
