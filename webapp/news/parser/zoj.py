@@ -46,9 +46,11 @@ def get_news_content():
         html = get_html(news.url)
         if html:
             soup = BeautifulSoup(html, 'html.parser')
-            all_paragraphs = soup.find_all('div', class_='FXh C1bv')
-            print(all_paragraphs)
+            all_paragraphs = soup.find_all('div', class_='B1bl')
+            text = all_paragraphs.find('p')
+            print(text)
             break
+           
 
     
 
