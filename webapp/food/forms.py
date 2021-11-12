@@ -33,7 +33,6 @@ class FoodForm(FlaskForm):
 class UserFood(FlaskForm):
     food_name = StringField(
         "Название продукта",
-        choices=[],
         render_kw={"class": "form-control"},
     )
     food_weight = StringField(
