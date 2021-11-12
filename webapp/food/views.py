@@ -46,7 +46,7 @@ def process_adding_food():
 
 
 @blueprint.route("/add_food")
-def add_food():
+def add_prod():
     title = "Добавление продуктов"
     form = FoodForm()
     return render_template(

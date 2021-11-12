@@ -1,10 +1,12 @@
 from flask import Blueprint, flash, redirect, url_for, render_template, request
 from flask_login import current_user
 
+from webapp.admin.forms import EditForm
 from webapp.db import db
 
 from webapp.news.forms import NewsForm
 from webapp.news.models import BDConnector
+from webapp.news.views import news
 
 from webapp.user.decorators import admin_required
 
@@ -18,9 +20,31 @@ blueprint = Blueprint("admin", __name__, url_prefix="/admin")
 def admin():
     page_title = "Панель управления"
     text = "Контент админки"
+    title = "Редактирование"
+    form = EditForm()
+    news_edit = BDConnector.query.all()
     return render_template(
-        "admin/index.html", page_title=page_title, text=text, user=current_user
+        "admin/index.html", page_title=page_title, text=text, user=current_user, form=form, title=title, news_edit = news_edit
     )
+
+
+@blueprint.route("/news/<int:news_id>/edit", methods=["GET", "POST"])
+@admin_required
+def edit(news_id):
+    form = EditForm()
+    news_edit = BDConnector.query.filter(BDConnector.id == news_id).first()
+    if request.method == "GET":
+        form.edit_title.data=news_edit.title
+        form.edit_text.data=news_edit.text
+        form.edit_category.data=news_edit.category
+    if form.validate_on_submit():
+        news_edit.title = form.edit_title.data
+        news_edit.text = form.edit_text.data
+        news_edit.category = form.edit_category.data
+        db.session.commit()
+        flash("Вы успешно отредактировали новость в базе")
+        return redirect(url_for("news.index"))
+    return render_template("admin/editnews.html", form = form, news_edit = news_edit, user=current_user)
 
 
 @blueprint.route("/process_creating_news", methods=["POST"])
