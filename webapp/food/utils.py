@@ -1,3 +1,4 @@
+from flask import request as flask_req
 from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.models import (HoverTool, FactorRange, LinearAxis, Grid,
@@ -7,8 +8,10 @@ from bokeh.models.sources import ColumnDataSource
 
 from datetime import date, timedelta
 from flask_login import current_user
+from werkzeug.wrappers import request
 
 from webapp.food.models import DailyConsumption
+from webapp.food.forms import UserFood
 
 
 def daily_counter(today):
@@ -29,11 +32,10 @@ def daily_counter(today):
     return daily_consumption_cals, daily_consumption_prots, daily_consumption_fats, daily_consumption_carbos
 
 
-
-def graph_maker():
+def graph_maker(days):
     data = {"days": [], "calories": [], "prots": [], "fats": [], "carbos": []}
     data_check = False
-    for i in range(0, 3):
+    for i in range(days):
         day = date.today() - timedelta(days=i)
         day = day.strftime("%d/%m/%Y")
         consumption_data = daily_counter(day)

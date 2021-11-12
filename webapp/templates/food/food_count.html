@@ -14,42 +14,46 @@
 
 <div class="row">
   <div class="col-8">
-
-    <form action="{{ url_for('food.process_adding_calories') }}" method="GET">
-        {{ form.hidden_tag() }}
-        <div class="mb-3">
-          {{ form.food_name.label }}
-          {{ form.food_name() }}
-        </div> 
-        <div class="mb-3">
-          {{ form.food_weight.label }}
-          {{ form.food_weight() }}
-        </div>
-        {{ form.submit() }}
+    <form action="{{ url_for('food.process_adding_calories') }}", method="POST">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.food_name.label }}
+        {{ form.food_name() }}
+      </div> 
+      <div class="mb-3">
+        {{ form.food_weight.label }}
+        {{ form.food_weight() }}
+      </div>
+      {{ form.submit() }}
     </form> 
     <div class="text-end">
       <form>
           <button type="submit" formaction="/food/add_food" class="btn btn-info">Добавить продукт в базу</button>
       </form>
     </div>
-    <form>
-      <div class="mb-3">
-
-          <a>Сегодня вы потребили {{ daily_consumption[0] }} калорий</a><br>
-          <a>Белков: {{ daily_consumption[1] }}г</a><br>
-          <a>Жиров: {{ daily_consumption[2] }}г</a><br>
-          <a>Углеводов: {{ daily_consumption[3] }}г</a><br>
-          {% if data_check == True %}
-            {{ the_div|safe }}
-            <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.css" rel="stylesheet">
-            <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css" rel="stylesheet">
-            <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.js"></script>
-            <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.5.min.js"></script>
-            {{ the_script|safe }}
-          {% endif %}
-      </div>
+    <div class="mb-3">
+        <a>Сегодня вы потребили {{ daily_consumption[0] }} калорий</a><br>
+        <a>Белков: {{ daily_consumption[1] }}г</a><br>
+        <a>Жиров: {{ daily_consumption[2] }}г</a><br>
+        <a>Углеводов: {{ daily_consumption[3] }}г</a><br>
+    </div>
+    <form method="POST">
+      {% if data_check == True %}
+        <div class="input-group mb-3">
+          <div class="col-4">  
+            {{ form_Graph.hidden_tag() }}
+            {{ form_Graph.consume_days() }}
+          </div>
+          {{ form_Graph.submit_days() }}
+        </div>
     </form>
-   
+        {{ the_div|safe }}
+        <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.css" rel="stylesheet">
+        <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css" rel="stylesheet">
+        <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.js"></script>
+        <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.5.min.js"></script>
+        {{ the_script|safe }}
+      {% endif %}
   </div>
 </div>
 
