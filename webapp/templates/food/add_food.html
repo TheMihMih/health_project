@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+
+{% block title%}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block body%}
+
+<div class="row">
+    <div class="col-8">
+      <form action="{{ url_for('food.process_adding_food') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.food_name.label }}
+          {{ form.food_name() }}
+        </div> 
+        <div class="mb-3">
+          {{ form.food_calories.label }}
+          {{ form.food_calories() }}
+        </div>
+        <div class="mb-3">
+          {{ form.food_proteins.label }}
+          {{ form.food_proteins() }}
+        </div>
+        <div class="mb-3">
+          {{ form.food_fats.label }}
+          {{ form.food_fats() }}
+        </div>
+        <div class="mb-3">
+          {{ form.food_carbohydrates.label }}
+          {{ form.food_carbohydrates() }}
+        </div>
+        {{ form.food_submit() }}
+      </form>  
+    </div>
+</div>
+
+{% endblock %}

@@ -1,38 +1,38 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 
-{% block title%}
+{% block title %}
 
 {{ page_title }}
 
 {% endblock %}
 
-{% block body%}
+{% block body %}
 
 <div class="container">
   <div class="row">
     <div class="col-4">
-        <form action="{{ url_for('user.process_reg')}}" method="post" class=container>
-            {{ form.hidden_tag() }}
-            <div class="mb-3">
-              {{ form.username.label }}
-              {{ form.username() }}
-            </div>
-            <div class="mb-3">
-              {{ form.email.label }}
-              {{ form.email() }}
-            </div>
-            <div class="mb-3">
-              {{ form.password1.label }}
-              {{ form.password1() }}
-            </div>
-            <div class="mb-3">
-              {{ form.password2.label }}
-              {{ form.password2() }}
-            </div>
-            <div class="mb-3 form-check"> 
-              {{ form.submit }}
-            </div>
-        </form>
+      <form action="{{ url_for('user.process_reg')}}" method="post" class=container>
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.username.label }}
+          {{ form.username() }}
+        </div>
+        <div class="mb-3">
+          {{ form.email.label }}
+          {{ form.email() }}
+        </div>
+        <div class="mb-3">
+          {{ form.password1.label }}
+          {{ form.password1() }}
+        </div>
+        <div class="mb-3">
+          {{ form.password2.label }}
+          {{ form.password2() }}
+        </div>
+        <div class="mb-3 form-check"> 
+          {{ form.submit }}
+        </div>
+      </form>
     </div>
     <div class="col-8">
 
