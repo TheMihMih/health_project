@@ -122,10 +122,10 @@ def get_image(img_id):
 @blueprint.route("/category/<url>", methods=["GET"])
 def category(url):
     if url == "meal":
-        category_list = db.session.query(BDConnector).filter(BDConnector.category == "Питание")
+        category_list = BDConnector.query.filter(BDConnector.category == "Питание").all()
         page_title = "Новости про питание"
     elif url == "train":
-        category_list = db.session.query(BDConnector).filter(BDConnector.category == "Тренировки")
+        category_list = BDConnector.query.filter(BDConnector.category == "Тренировки").all()
         page_title = "Новости про тренировки"
 
     return render_template(
