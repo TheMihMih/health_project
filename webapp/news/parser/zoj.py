@@ -1,13 +1,9 @@
 import platform
 import locale
 import urllib.request
-import os
-from PIL import Image
-from io import BytesIO
 
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
-from werkzeug.datastructures import FileStorage
 from webapp.news.parser.utils import get_html, save_news
 from webapp.news.models import BDConnector
 from webapp import db

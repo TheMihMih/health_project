@@ -6,7 +6,6 @@ from PIL import Image
 from io import BytesIO
 from fuzzywuzzy import fuzz
 from webapp.food.views import graph_maker
-from webapp import db
 
 blueprint = Blueprint("news", __name__)
 
