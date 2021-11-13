@@ -10,6 +10,8 @@ from webapp.news.views import blueprint as news_blueprint
 
 from webapp.admin.views import blueprint as admin_blueprint
 
+from webapp.food.views import blueprint as food_blueprint
+
 from webapp.db import db
 
 
@@ -27,6 +29,7 @@ def create_app():
     app.register_blueprint(user_blueprint)
     app.register_blueprint(admin_blueprint)
     app.register_blueprint(news_blueprint)
+    app.register_blueprint(food_blueprint)
 
     @login_manager.user_loader
     def load_user(user_id):
