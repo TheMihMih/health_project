@@ -20,7 +20,6 @@ def create_app():
     app.config.from_pyfile("config.py")
     db.init_app(app)
     migrate = Migrate(app, db)
-    bootstrap = Bootstrap(app)
 
     login_manager = LoginManager()
     login_manager.init_app(app)
