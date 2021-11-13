@@ -2,10 +2,11 @@ from flask import Blueprint, render_template, Response, flash, request
 from flask_login import current_user
 from webapp.news.forms import SearchForm
 from webapp.news.models import BDConnector
-from PIL import Image 
+from PIL import Image
 from io import BytesIO
 from fuzzywuzzy import fuzz
 from webapp.food.views import graph_maker
+from webapp import db
 
 blueprint = Blueprint("news", __name__)
 
@@ -49,10 +50,14 @@ def about():
 @blueprint.route("/news")
 def display_news():
     form = SearchForm()
-    title = "Новости Python"
+    title = "Новости"
     news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
     return render_template(
-        "news/news.html", page_title=title, form=form, news_list=news_list, user=current_user
+        "news/news.html",
+        page_title=title,
+        form=form,
+        news_list=news_list,
+        user=current_user,
     )
 
 
@@ -67,14 +72,24 @@ def process_searching_news():
         for news in news_list:
             Ratio = fuzz.token_sort_ratio(news.title, search_title)
             if Ratio >= 50:
-                news_exists += BDConnector.query.filter(BDConnector.title == news.title).all()
+                news_exists += BDConnector.query.filter(
+                    BDConnector.title == news.title
+                ).all()
         if news_exists:
             return render_template(
-                "news/news.html", page_title=title, form=form, news_list=news_exists, user=current_user
+                "news/news.html",
+                page_title=title,
+                form=form,
+                news_list=news_exists,
+                user=current_user,
             )
-        flash('Новость не найдена, попробуйте изменить запрос')
+        flash("Новость не найдена, попробуйте изменить запрос")
         return render_template(
-            "news/news.html", page_title=title, form=form, news_list=news_list, user=current_user
+            "news/news.html",
+            page_title=title,
+            form=form,
+            news_list=news_list,
+            user=current_user,
         )
 
 
@@ -90,7 +105,7 @@ def news(news_id):
     )
 
 
-@blueprint.route('/img/<int:img_id>')
+@blueprint.route("/img/<int:img_id>")
 def get_image(img_id):
     news_img = BDConnector.query.filter(BDConnector.id == img_id).first()
     if news_img.image:
@@ -101,7 +116,21 @@ def get_image(img_id):
         contents = output.getvalue()
         output.close()
 
-        return Response(
-            contents,
-            mimetype='image/png'
+        return Response(contents, mimetype="image/png")
+
+
+@blueprint.route("/category/<url>", methods=["GET"])
+def category(url):
+    if url == "meal":
+        category_list = db.session.query(BDConnector).filter(BDConnector.category == "Питание")
+        page_title = "Новости про питание"
+    elif url == "train":
+        category_list = db.session.query(BDConnector).filter(BDConnector.category == "Тренировки")
+        page_title = "Новости про тренировки"
+
+    return render_template(
+        "news/category.html",
+        category_list=category_list,
+        page_title=page_title,
+        user=current_user
         )

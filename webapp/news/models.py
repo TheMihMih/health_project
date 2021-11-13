@@ -9,9 +9,7 @@ class BDConnector(db.Model):
 
     published = db.Column(db.DateTime, nullable=False)
 
-    category = db.Column(
-        db.String, nullable=True
-    ) 
+    category = db.Column(db.String, nullable=True)
 
     def __repr__(self):
         return f"<News {self.title} {self.category}>"

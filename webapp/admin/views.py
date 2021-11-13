@@ -64,8 +64,8 @@ def process_creating_news():
                 title=form.news_title.data,
                 category=form.news_category.data,
                 text=form.news_text.data,
-                image = image_data,
-                published=datetime.now()    
+                image=image_data,
+                published=datetime.now(),
             )
             db.session.add(new_news)
             db.session.commit()
