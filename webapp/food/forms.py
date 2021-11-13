@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
-from wtforms.validators import DataRequired 
+from wtforms.validators import DataRequired
 
 
 class FoodForm(FlaskForm):
@@ -21,12 +21,12 @@ class FoodForm(FlaskForm):
     food_fats = StringField(
         "Содержание жира, г.",
         render_kw={"class": "form-control"},
-    )   
+    )
     food_carbohydrates = StringField(
         "Содержание углеводов, г.",
         render_kw={"class": "form-control"},
-    )   
-        
+    )
+
     food_submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
 
@@ -41,10 +41,7 @@ class UserFood(FlaskForm):
         render_kw={"class": "form-control"},
     )
 
-    submit = SubmitField(
-        "Отправить",
-        render_kw={"class": "btn btn-primary"}
-    )
+    submit = SubmitField("Отправить", render_kw={"class": "btn btn-primary"})
 
 
 class GraphDisplay(FlaskForm):
@@ -53,4 +50,6 @@ class GraphDisplay(FlaskForm):
         render_kw={"class": "form-control", "placeholder": "Введите количество дней"},
     )
 
-    submit_days = SubmitField("Применить", render_kw={"class": "btn btn-outline-primary"})
+    submit_days = SubmitField(
+        "Применить", render_kw={"class": "btn btn-outline-primary"}
+    )

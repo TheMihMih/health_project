@@ -29,7 +29,7 @@ def index():
             news_list=news_list,
             the_script=script,
             the_div=div,
-            data_check=data_check
+            data_check=data_check,
         )
     return render_template(
         "news/index.html",
@@ -37,7 +37,7 @@ def index():
         text=text,
         text2=text2,
         user=current_user,
-        news_list=news_list
+        news_list=news_list,
     )
 
 
@@ -122,15 +122,19 @@ def get_image(img_id):
 @blueprint.route("/category/<url>", methods=["GET"])
 def category(url):
     if url == "meal":
-        category_list = db.session.query(BDConnector).filter(BDConnector.category == "Питание")
+        category_list = BDConnector.query.filter(
+            BDConnector.category == "Питание"
+        ).all()
         page_title = "Новости про питание"
     elif url == "train":
-        category_list = db.session.query(BDConnector).filter(BDConnector.category == "Тренировки")
+        category_list = BDConnector.query.filter(
+            BDConnector.category == "Тренировки"
+        ).all()
         page_title = "Новости про тренировки"
 
     return render_template(
         "news/category.html",
         category_list=category_list,
         page_title=page_title,
-        user=current_user
-        )
+        user=current_user,
+    )

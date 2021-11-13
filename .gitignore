@@ -4,4 +4,7 @@ __pycache__
 workshop.py
 .vscode
 webapp.db
+webapp.db.new
+get_all_news.py
+test.html
 webapp.db.old
