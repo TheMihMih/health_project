@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from webapp.news.parser.utils import get_html, save_news
 from webapp.news.models import BDConnector
+from webapp import db
 
 if platform.system() == "Windows":
     locale.setlocale(locale.LC_ALL, "russian")
@@ -36,25 +37,33 @@ def get_meal_news():
             published = parse_date(published)
             category = "Питание"
             url = (f"https://www.fontanka.ru{news.find('a', class_='B5i7')['href']}")
-            print(url)
             save_news(title, published, category, url)
             
         
-'''
+def get_train_news():
+    html = get_html('https://www.fontanka.ru/cgi-bin/search.scgi?query=%D1%82%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8&rubric=family&fdate=2000-01-01&tdate=2021-11-13&sortt=weight')
+    soup = BeautifulSoup(html, 'html.parser')
+    if html:
+        all_news = soup.find_all('li', class_='B5kp GRb5')
+        for news in all_news:
+            title = news.find('a', class_='B5i7')['title']
+            published = news.find('div', class_='B5kr B5br').find('time').find('span').text
+            published = parse_date(published)
+            category = "Тренировки"
+            url = (f"https://www.fontanka.ru{news.find('a', class_='B5i7')['href']}")
+            save_news(title, published, category, url)
+
+
 def get_news_content():
     news_without_text = BDConnector.query.filter(BDConnector.text.is_(None))
     for news in news_without_text:
         html = get_html(news.url)
         if html:
             soup = BeautifulSoup(html, 'html.parser')
-            all_paragraphs = soup.find_all('div', class_='B1bl')
-            text = all_paragraphs.find('p')
-            print(text)
-            break
-           
+            paragraph = soup.find('div', class_='F3h C1b5').text
+            if paragraph:
+                news.text = paragraph
+                db.session.add(news)
+                db.session.commit()
+                               
 
-def get_train_news():
-    html = get_html('https://www.fontanka.ru/cgi-bin/search.scgi?query=%D1%82%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8&rubric=sport&fdate=2000-01-01&tdate=2021-11-08&sortt=date')
-    soup = BeautifulSoup(html, 'html.parser')
-    pass
-'''

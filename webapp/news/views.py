@@ -13,14 +13,14 @@ blueprint = Blueprint("news", __name__)
 @blueprint.route("/index")
 def index():
     page_title = "Главная страница"
-    text = """Мы рады Вас приветствовать на нашем сайте """
-    text2 = """Здесь будет интересный блок """
+    text = """ Мы рады Вас приветствовать на нашем сайте """
+    text2 = """ Вы найдете много интересных новостей на нашем сайте """
     return render_template(
         "news/index.html",
         page_title=page_title,
         text=text,
         text2=text2,
-        user=current_user,
+        user=current_user
     )
 
 
