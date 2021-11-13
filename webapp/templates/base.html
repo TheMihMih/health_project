@@ -51,7 +51,6 @@
     
     <div class="container">
 
-<<<<<<< HEAD
   <div class="container">
 
     {% if user.is_authenticated %}
@@ -71,25 +70,6 @@
     {% block body%}{% endblock %}
   
   </div>
-=======
-      {% if user.is_authenticated %}
-        {% include 'menu.html'%}
-      {% endif %}
-
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-danger" role="alert">
-                {{ message }}<br>
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-
-      {% block body%}{% endblock %}
-    
-    </div>
->>>>>>> master
 
   <div class="b-example-divider"></div>
 
