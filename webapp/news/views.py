@@ -5,11 +5,8 @@ from webapp.news.models import BDConnector
 from PIL import Image
 from io import BytesIO
 from fuzzywuzzy import fuzz
-<<<<<<< HEAD
-from webapp.db import db
-=======
 from webapp.food.views import graph_maker
->>>>>>> f2a290739c4e186d7718ff39a421257c20d2bd76
+from webapp import db
 
 blueprint = Blueprint("news", __name__)
 
