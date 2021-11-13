@@ -1,8 +1,13 @@
 import platform
 import locale
+import urllib.request
+import os
+from PIL import Image
+from io import BytesIO
 
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
+from werkzeug.datastructures import FileStorage
 from webapp.news.parser.utils import get_html, save_news
 from webapp.news.models import BDConnector
 from webapp import db
@@ -71,5 +76,12 @@ def get_news_content():
             paragraph = soup.find("div", class_="F3h C1b5").text
             if paragraph:
                 news.text = paragraph
+            try:
+                news_image = soup.find("picture", class_="Nbb GJmr")["data-flickity-lazyload"]
+                image_bytes = urllib.request.urlopen(news_image).read()
+                news.image = image_bytes
                 db.session.add(news)
                 db.session.commit()
+                
+            except TypeError:
+                print("Нет картинки")
