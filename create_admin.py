@@ -13,7 +13,7 @@ with app.app_context():
     if User.query.filter(User.username == username).count():
         print("Пользователь с таким именем уже существует!!!")
         sys.exit(0)
-    
+
     email = input("Email: ")
 
     if User.query.filter(User.email == email).count():
@@ -26,8 +26,8 @@ with app.app_context():
     if password1 != password2:
         print("Пароль не одинаковый!")
         sys.exit(0)
-    
-    admin = User(username=username, email=email, role='admin')
+
+    admin = User(username=username, email=email, role="admin")
     admin.set_password(password1)
 
     db.session.add(admin)

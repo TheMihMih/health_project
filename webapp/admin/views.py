@@ -24,7 +24,13 @@ def admin():
     form = EditForm()
     news_edit = BDConnector.query.all()
     return render_template(
-        "admin/index.html", page_title=page_title, text=text, user=current_user, form=form, title=title, news_edit = news_edit
+        "admin/index.html",
+        page_title=page_title,
+        text=text,
+        user=current_user,
+        form=form,
+        title=title,
+        news_edit=news_edit,
     )
 
 
@@ -34,9 +40,9 @@ def edit(news_id):
     form = EditForm()
     news_edit = BDConnector.query.filter(BDConnector.id == news_id).first()
     if request.method == "GET":
-        form.edit_title.data=news_edit.title
-        form.edit_text.data=news_edit.text
-        form.edit_category.data=news_edit.category
+        form.edit_title.data = news_edit.title
+        form.edit_text.data = news_edit.text
+        form.edit_category.data = news_edit.category
     if form.validate_on_submit():
         news_edit.title = form.edit_title.data
         news_edit.text = form.edit_text.data
@@ -44,7 +50,9 @@ def edit(news_id):
         db.session.commit()
         flash("Вы успешно отредактировали новость в базе")
         return redirect(url_for("news.index"))
-    return render_template("admin/editnews.html", form = form, news_edit = news_edit, user=current_user)
+    return render_template(
+        "admin/editnews.html", form=form, news_edit=news_edit, user=current_user
+    )
 
 
 @blueprint.route("/process_creating_news", methods=["POST"])
