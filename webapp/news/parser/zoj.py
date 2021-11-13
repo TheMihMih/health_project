@@ -26,20 +26,21 @@ def parse_date(date_str):
 
 
 def get_meal_news():
-    html = get_html('https://www.fontanka.ru/cgi-bin/search.scgi?query=%D0%BF%D0%B8%D1%82%D0%B0%D0%BD%D0%B8%D0%B5&rubric=family&fdate=2000-01-01&tdate=2021-11-08&sortt=date')
+    html = get_html('https://www.fontanka.ru/cgi-bin/search.scgi?query=%D0%BF%D0%B8%D1%82%D0%B0%D0%BD%D0%B8%D0%B5&rubric=family&fdate=2000-01-01&tdate=2021-11-13&sortt=date')
     soup = BeautifulSoup(html, 'html.parser')
     if html:
-        all_news = soup.find_all('li', class_='GDbv')
+        all_news = soup.find_all('li', class_='B5kp GRb5')
         for news in all_news:
-            title = news.find('a', class_='B3ix')['title']
-            # text = news.find('div', class_='news__content').find('a').text
-            published = news.find('time', class_='B3fj').find('span').text
+            title = news.find('a', class_='B5i7')['title']
+            published = news.find('div', class_='B5kr B5br').find('time').find('span').text
             published = parse_date(published)
             category = "Питание"
-            url = (f"https://www.fontanka.ru/{news.find('a', class_='B3ix')['href']}")
+            url = (f"https://www.fontanka.ru{news.find('a', class_='B5i7')['href']}")
+            print(url)
             save_news(title, published, category, url)
-        print("Новости добавлены в базу")
-
+            
+        
+'''
 def get_news_content():
     news_without_text = BDConnector.query.filter(BDConnector.text.is_(None))
     for news in news_without_text:
@@ -52,19 +53,8 @@ def get_news_content():
             break
            
 
-    
-
-
-#def get_train_news():
+def get_train_news():
     html = get_html('https://www.fontanka.ru/cgi-bin/search.scgi?query=%D1%82%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8&rubric=sport&fdate=2000-01-01&tdate=2021-11-08&sortt=date')
     soup = BeautifulSoup(html, 'html.parser')
-    if html:
-        all_news = soup.find_all('div', class_='news--simple')
-        for news in all_news:
-            title = news.find('a')['title']
-            #text = news.find('div', class_='news__content').find('a').text
-            published = news.find('time').text
-            published = parse_date(published)
-            category = "Тренировки"
-            url = (f"https://tolknews.ru/{news.find('a')['href']}")
-            save_news(title, published, category, url)
+    pass
+'''
