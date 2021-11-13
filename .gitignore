@@ -5,9 +5,6 @@ workshop.py
 .vscode
 webapp.db
 webapp.db.new
-<<<<<<< HEAD
 get_all_news.py
 test.html
 webapp.db.old
-=======
->>>>>>> master

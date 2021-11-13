@@ -15,10 +15,6 @@ blueprint = Blueprint("news", __name__)
 @blueprint.route("/index")
 def index():
     page_title = "Главная страница"
-<<<<<<< HEAD
-    text = """ Мы рады Вас приветствовать на нашем сайте """
-    text2 = """ Вы найдете много интересных новостей на нашем сайте """
-=======
     text = """Мы рады Вас приветствовать на нашем сайте """
     text2 = """Здесь будет интересный блок """
     news_list = BDConnector.query.order_by(BDConnector.id.desc()).limit(5)
@@ -35,18 +31,13 @@ def index():
             the_div=div,
             data_check=data_check
         )
->>>>>>> master
     return render_template(
         "news/index.html",
         page_title=page_title,
         text=text,
         text2=text2,
-<<<<<<< HEAD
-        user=current_user
-=======
         user=current_user,
         news_list=news_list
->>>>>>> master
     )
 
 
