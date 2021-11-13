@@ -5,7 +5,11 @@ from webapp.news.models import BDConnector
 from PIL import Image
 from io import BytesIO
 from fuzzywuzzy import fuzz
+<<<<<<< HEAD
 from webapp.db import db
+=======
+from webapp.food.views import graph_maker
+>>>>>>> f2a290739c4e186d7718ff39a421257c20d2bd76
 
 blueprint = Blueprint("news", __name__)
 
@@ -16,12 +20,27 @@ def index():
     page_title = "Главная страница"
     text = """Мы рады Вас приветствовать на нашем сайте """
     text2 = """Здесь будет интересный блок """
+    news_list = BDConnector.query.order_by(BDConnector.id.desc()).limit(5)
+    if current_user.is_authenticated:
+        script, div, data_check = graph_maker(3)
+        return render_template(
+            "news/index.html",
+            page_title=page_title,
+            text=text,
+            text2=text2,
+            user=current_user,
+            news_list=news_list,
+            the_script=script,
+            the_div=div,
+            data_check=data_check
+        )
     return render_template(
         "news/index.html",
         page_title=page_title,
         text=text,
         text2=text2,
         user=current_user,
+        news_list=news_list
     )
 
 
