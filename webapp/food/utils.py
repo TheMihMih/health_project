@@ -110,13 +110,13 @@ def create_hover_tool():
             <span class="hover-tooltip">Потреблено @calories калорий из 2000 </span>
         </div>
         <div>
-            <span class="hover-tooltip">Белки: @prots г</span>
+            <span class="hover-tooltip">Белки: @prots{0.0} г</span>
         </div>
         <div>
-            <span class="hover-tooltip">Жиры: @fats г</span>
+            <span class="hover-tooltip">Жиры: @fats{0.0} г</span>
         </div>
         <div>
-            <span class="hover-tooltip">Углеводы: @carbos г</span>
+            <span class="hover-tooltip">Углеводы: @carbos{0.0} г</span>
         </div>
     """
     return HoverTool(tooltips=hover_html)
