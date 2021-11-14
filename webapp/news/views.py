@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, Response, flash, request
+from flask import abort, Blueprint, render_template, Response, flash, request
 from flask_login import current_user
 from webapp.news.forms import SearchForm
 from webapp.news.models import BDConnector
@@ -6,7 +6,6 @@ from PIL import Image
 from io import BytesIO
 from fuzzywuzzy import fuzz
 from webapp.food.views import graph_maker
-from webapp import db
 
 blueprint = Blueprint("news", __name__)
 
@@ -96,11 +95,15 @@ def process_searching_news():
 @blueprint.route("/news/<int:news_id>", methods=["GET"])
 def news(news_id):
     news_context = BDConnector.query.filter(BDConnector.id == news_id).first()
+    if not news_context:
+        abort(404)
     page_title = news_context.title
+    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
     return render_template(
         "news/news_id.html",
         page_title=page_title,
         news_context=news_context,
+        news_list=news_list,
         user=current_user,
     )
 

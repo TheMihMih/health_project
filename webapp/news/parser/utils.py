@@ -1,4 +1,3 @@
-import datetime
 import requests
 
 from webapp.db import db
