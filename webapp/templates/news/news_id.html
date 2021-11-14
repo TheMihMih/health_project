@@ -9,23 +9,34 @@
 {% block body %}
 
     <div class="row">
-      <div class="col-2"></div>
+      
       <div class="col-8">
-          <h1>{{ news_context.title }}</h1>
-            <h5>{{ news_context.category }}</h5>
-            {{ news_context.text }}<br>
-            {% if news_context.image %}
-              <img class="ImageDrawer" src="{{ url_for('news.get_image', img_id=news_context.id) }}"  width="800" height="800">
-            {% endif %}
+        <h1>{{ news_context.title }}</h1>
 
-            {% if user.is_admin %}
-              <div class="text-end">
-                <form>
-                    <button type="submit" formaction="{{ url_for('admin.edit', news_id=news_context.id) }}" class="btn btn-info">Редактировать новость</button>
-                </form>
-              </div>
-            {% endif %}
+          <h5>{{ news_context.category }}</h5>
+          {{ news_context.text }}<br>
+          {% if news_context.image %}
+            <img class="ImageDrawer" src="{{ url_for('news.get_image', img_id=news_context.id) }}"  width="800" height="800">
+          {% endif %}
+
+          {% if user.is_admin %}
+            <div class="text-end">
+              <form>
+                <button type="submit" formaction="{{ url_for('admin.edit', news_id=news_context.id) }}" class="btn btn-info">Редактировать новость</button>
+              </form>
+            </div>
+          {% endif %}
+
       </div>
+
+      <div class="col-4">
+        {% for news in news_list %}
+                <h3><a href="{{news.id}} ">{{ news.title }}</a></h3>
+                <b>{{ news.category }}</b><br>
+                <hr />
+            {% endfor %}
+      </div>
+
     </div>
 
 {% endblock %}

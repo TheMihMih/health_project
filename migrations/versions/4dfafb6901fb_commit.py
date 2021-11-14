@@ -1,8 +1,8 @@
-"""added url for news
+"""commit
 
-Revision ID: 50e46e70a851
-Revises: bdbb2becd139
-Create Date: 2021-11-04 16:43:21.698737
+Revision ID: 4dfafb6901fb
+Revises: 
+Create Date: 2021-11-14 00:37:38.940774
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '50e46e70a851'
-down_revision = 'bdbb2becd139'
+revision = '4dfafb6901fb'
+down_revision = None
 branch_labels = None
 depends_on = None
 
