@@ -1,5 +1,6 @@
 import platform
 import locale
+import urllib.request
 
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
@@ -71,5 +72,12 @@ def get_news_content():
             paragraph = soup.find("div", class_="F3h C1b5").text
             if paragraph:
                 news.text = paragraph
+            try:
+                news_image = soup.find("picture", class_="Nbb GJmr")["data-flickity-lazyload"]
+                image_bytes = urllib.request.urlopen(news_image).read()
+                news.image = image_bytes
                 db.session.add(news)
                 db.session.commit()
+                
+            except TypeError:
+                print("Нет картинки")

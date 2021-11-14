@@ -58,7 +58,7 @@ def graph_maker(days):
     return script, div, data_check
 
 
-def create_bar_chart(data, x_name, y_name, hover_tool=None, width=300, height=150):
+def create_bar_chart(data, x_name, y_name, hover_tool=None, width=800, height=400):
 
     source = ColumnDataSource(data)
     xdr = FactorRange(factors=data[x_name])
