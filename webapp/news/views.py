@@ -6,6 +6,7 @@ from PIL import Image
 from io import BytesIO
 from fuzzywuzzy import fuzz
 from webapp.food.views import graph_maker
+from random import random, choice
 
 blueprint = Blueprint("news", __name__)
 
@@ -99,6 +100,7 @@ def news(news_id):
         abort(404)
     page_title = news_context.title
     news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+
     return render_template(
         "news/news_id.html",
         page_title=page_title,
