@@ -10,11 +10,11 @@
 
     <div class="row">
       
-      <div class="col-8">
+      <div class="col-8 news_context">
         <h1>{{ news_context.title }}</h1>
 
           <h5>{{ news_context.category }}</h5>
-          {{ news_context.text }}<br>
+          {{ news_context.text|safe }}<br>
           {% if news_context.image %}
             <img class="ImageDrawer" src="{{ url_for('news.get_image', img_id=news_context.id) }}"  width="800" height="800">
           {% endif %}

@@ -17,7 +17,7 @@ def index():
     page_title = "Главная страница"
     text = """Мы рады Вас приветствовать на нашем сайте """
     text2 = """Здесь будет интересный блок """
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).limit(5)
+    news_list = BDConnector.query.filter(BDConnector.text.isnot(None)).order_by(BDConnector.id.desc()).limit(5)
     if current_user.is_authenticated:
         script, div, data_check = graph_maker(3)
         return render_template(
@@ -51,7 +51,7 @@ def about():
 def display_news():
     form = SearchForm()
     title = "Новости"
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+    news_list = BDConnector.query.filter(BDConnector.text.isnot(None)).order_by(BDConnector.id.desc()).all()
     return render_template(
         "news/news.html",
         page_title=title,
@@ -66,7 +66,7 @@ def process_searching_news():
     form = SearchForm()
     title = "Новости Python"
     search_title = request.values[form.search_news.name]
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+    news_list = BDConnector.query.filter(BDConnector.text.isnot(None)).order_by(BDConnector.id.desc()).all()
     news_exists = []
     if form.validate_on_submit:
         for news in news_list:
@@ -98,12 +98,11 @@ def news(news_id):
     news_context = BDConnector.query.filter(BDConnector.id == news_id).first()
     if not news_context:
         abort(404)
-    page_title = news_context.title
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+    news_list = BDConnector.query.filter(BDConnector.text.isnot(None)).order_by(BDConnector.id.desc()).limit(5)
 
     return render_template(
         "news/news_id.html",
-        page_title=page_title,
+        page_title=news_context.title,
         news_context=news_context,
         news_list=news_list,
         user=current_user,

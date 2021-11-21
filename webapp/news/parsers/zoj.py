@@ -4,7 +4,7 @@ import urllib.request
 
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
-from webapp.news.parser.utils import get_html, save_news
+from webapp.news.parsers.utils import get_html, save_news
 from webapp.news.models import BDConnector
 from webapp import db
 
@@ -78,6 +78,5 @@ def get_news_content():
                 news.image = image_bytes
                 db.session.add(news)
                 db.session.commit()
-                
             except TypeError:
                 print("Нет картинки")
