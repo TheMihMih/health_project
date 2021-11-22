@@ -5,7 +5,7 @@ import urllib.request
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from webapp.news.parsers.utils import get_html, save_news
-from webapp.news.models import BDConnector
+from webapp.news.models import News
 from webapp import db
 
 if platform.system() == "Windows":
@@ -64,7 +64,7 @@ def get_train_news():
 
 
 def get_news_content():
-    news_without_text = BDConnector.query.filter(BDConnector.text.is_(None))
+    news_without_text = News.query.filter(News.text.is_(None))
     for news in news_without_text:
         html = get_html(news.url)
         if html:

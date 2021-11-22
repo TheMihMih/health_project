@@ -1,7 +1,7 @@
+from datetime import datetime
 from webapp.db import db
 
-
-class BDConnector(db.Model):
+class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     text = db.Column(db.Text, nullable=True)
@@ -14,3 +14,21 @@ class BDConnector(db.Model):
 
     def __repr__(self):
         return f"<News {self.title} {self.category}>"
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    news_id = db.Column(
+        db.Integer,
+        db.ForeignKey('news.id', ondelete='CASCADE'),
+        index=True
+    )
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id', ondelete='CASCADE'),
+        index=True
+    )
+
+    def __repr__(self):
+        return f"<Comment {self.id}>"

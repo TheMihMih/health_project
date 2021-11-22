@@ -1,7 +1,7 @@
 import requests
 
 from webapp.db import db
-from webapp.news.models import BDConnector
+from webapp.news.models import News
 
 
 def get_html(url):
@@ -18,9 +18,9 @@ def get_html(url):
 
 
 def save_news(title, published, category, url):
-    news_exist = BDConnector.query.filter(BDConnector.title == title).count()
+    news_exist = News.query.filter(News.title == title).count()
     if not news_exist:
-        new_news = BDConnector(
+        new_news = News(
             title=title, published=published, category=category, url=url
         )
         db.session.add(new_news)
