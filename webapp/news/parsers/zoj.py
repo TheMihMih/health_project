@@ -33,15 +33,15 @@ def get_meal_news():
     )
     soup = BeautifulSoup(html, "html.parser")
     if html:
-        all_news = soup.find_all("li", class_="B5kp GRb5")
+        all_news = soup.find_all("li", class_="CDl5 GJbp")
         for news in all_news:
-            title = news.find("a", class_="B5i7")["title"]
+            title = news.find("a", class_="CDjt")["title"]
             published = (
-                news.find("div", class_="B5kr B5br").find("time").find("span").text
+                news.find("div", class_="CDl7 CDhv").find("time").find("span").text
             )
             published = parse_date(published)
             category = "Питание"
-            url = f"https://www.fontanka.ru{news.find('a', class_='B5i7')['href']}"
+            url = f"https://www.fontanka.ru{news.find('a', class_='CDjt')['href']}"
             save_news(title, published, category, url)
 
 
@@ -51,15 +51,15 @@ def get_train_news():
     )
     soup = BeautifulSoup(html, "html.parser")
     if html:
-        all_news = soup.find_all("li", class_="B5kp GRb5")
+        all_news = soup.find_all("li", class_="CDl5 GJbp")
         for news in all_news:
-            title = news.find("a", class_="B5i7")["title"]
+            title = news.find("a", class_="CDjt")["title"]
             published = (
-                news.find("div", class_="B5kr B5br").find("time").find("span").text
+                news.find("div", class_="CDl7 CDhv").find("time").find("span").text
             )
             published = parse_date(published)
             category = "Тренировки"
-            url = f"https://www.fontanka.ru{news.find('a', class_='B5i7')['href']}"
+            url = f"https://www.fontanka.ru{news.find('a', class_='CDjt')['href']}"
             save_news(title, published, category, url)
 
 
@@ -69,11 +69,11 @@ def get_news_content():
         html = get_html(news.url)
         if html:
             soup = BeautifulSoup(html, "html.parser")
-            paragraph = soup.find("div", class_="F3h C1b5").text
+            paragraph = soup.find("div", class_="FNh D3bp").text
             if paragraph:
                 news.text = paragraph
             try:
-                news_image = soup.find("picture", class_="Nbb GJmr")["data-flickity-lazyload"]
+                news_image = soup.find("picture", class_="La- GPon")["data-flickity-lazyload"]
                 image_bytes = urllib.request.urlopen(news_image).read()
                 news.image = image_bytes
                 db.session.add(news)

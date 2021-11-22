@@ -33,6 +33,6 @@ def get_food():
 def setup_periodic_tasks(sender, **kwargs):
     sender.add_periodic_task(60, get_snippets_meal.s()) # выполняет каждую минуту или каждые 60 секунд
     sender.add_periodic_task(61, get_snippets_train.s())
-    #sender.add_periodic_task(70, get_content.s())
-    #sender.add_periodic_task(crontab(hour=10, minute=10, day_of_week=1), get_food.s())
+    sender.add_periodic_task(70, get_content.s())
+    sender.add_periodic_task(crontab(hour=10, minute=10, day_of_week=1), get_food.s())
     #sender.add_periodic_task(crontab(hour=7, minute=30, day_of_week=1), get_content.s())    # выполняет каждый понедельник в 7:30 утра

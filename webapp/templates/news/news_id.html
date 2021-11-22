@@ -15,9 +15,42 @@
 
           <h5>{{ news_context.category }}</h5>
           {{ news_context.text|safe }}<br>
+
+          {% if news_context.comments %}
+            <h3>Комментарии:</h3>
+            {% for comment in news_context.comments %}
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">{{ comment.text}}</p>
+                  <p class="card-text">
+                    <small>
+                      Опубликовано: {{comment.created.strftime('%d.%m.%Y')}}
+                      Автор: {{comment.user.username}}
+                    </small>
+                  </p>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+          
+          <div class="b-example-divider"></div>
+
+          <form action="{{ url_for('news.add_comment')}}" method="POST">
+            {{ comment_form.hidden_tag() }}
+            <div class="form-group">
+              {{ comment_form.comment_text() }}
+              {{ comment_form.comment_text.label }}
+            </div>
+            {{ comment_form.submit() }}
+          </form>
+
+          <div class="b-example-divider"></div>
+
           {% if news_context.image %}
             <img class="ImageDrawer" src="{{ url_for('news.get_image', img_id=news_context.id) }}"  width="800" height="800">
           {% endif %}
+
+          <div class="b-example-divider"></div>
 
           {% if user.is_admin %}
             <div class="text-end">

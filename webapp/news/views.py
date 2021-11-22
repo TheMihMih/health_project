@@ -1,12 +1,14 @@
 from flask import abort, Blueprint, render_template, Response, flash, request
+from flask.helpers import url_for
 from flask_login import current_user
-from webapp.news.forms import SearchForm
-from webapp.news.models import News
+from werkzeug.utils import redirect
+from webapp.news.forms import SearchForm, CommentForm
+from webapp.news.models import Comment, News
 from PIL import Image
 from io import BytesIO
 from fuzzywuzzy import fuzz
 from webapp.food.views import graph_maker
-from random import random, choice
+from webapp.db import db
 
 blueprint = Blueprint("news", __name__)
 
@@ -99,6 +101,7 @@ def news(news_id):
     if not news_context:
         abort(404)
     news_list = News.query.filter(News.text.isnot(None)).order_by(News.id.desc()).limit(5)
+    comment_form = CommentForm(news_id=news_context.id)
 
     return render_template(
         "news/news_id.html",
@@ -106,7 +109,22 @@ def news(news_id):
         news_context=news_context,
         news_list=news_list,
         user=current_user,
+        comment_form=comment_form,
     )
+
+
+@blueprint.route("/news/comment", methods=["POST"])
+def add_comment():
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        if News.query.filter(News.id == comment_form.news_id.data).first():
+            comment = Comment(
+                text=comment_form.comment_text.data, 
+                news_id=comment_form.news_id.data, 
+                user_id=current_user.id)
+            db.session.add(comment)
+            db.session.commit()
+            flash("Спасибо за Ваш комментарий")
 
 
 @blueprint.route("/img/<int:img_id>")
