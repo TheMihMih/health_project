@@ -1,6 +1,6 @@
 from flask import abort, Blueprint, render_template, Response, flash, request
-from flask.helpers import url_for
 from flask_login import current_user
+from flask_login.utils import login_required
 from werkzeug.utils import redirect
 from webapp.news.forms import SearchForm, CommentForm
 from webapp.news.models import Comment, News
@@ -9,6 +9,7 @@ from io import BytesIO
 from fuzzywuzzy import fuzz
 from webapp.food.views import graph_maker
 from webapp.db import db
+from webapp.utils import get_redirect_target
 
 blueprint = Blueprint("news", __name__)
 
@@ -102,7 +103,6 @@ def news(news_id):
         abort(404)
     news_list = News.query.filter(News.text.isnot(None)).order_by(News.id.desc()).limit(5)
     comment_form = CommentForm(news_id=news_context.id)
-
     return render_template(
         "news/news_id.html",
         page_title=news_context.title,
@@ -114,17 +114,22 @@ def news(news_id):
 
 
 @blueprint.route("/news/comment", methods=["POST"])
+@login_required
 def add_comment():
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
-        if News.query.filter(News.id == comment_form.news_id.data).first():
-            comment = Comment(
-                text=comment_form.comment_text.data, 
-                news_id=comment_form.news_id.data, 
-                user_id=current_user.id)
-            db.session.add(comment)
-            db.session.commit()
-            flash("Спасибо за Ваш комментарий")
+        comment = Comment(
+            text=comment_form.comment_text.data, 
+            news_id=comment_form.news_id.data, 
+            user_id=current_user.id)
+        db.session.add(comment)
+        db.session.commit()
+        flash("Спасибо за Ваш комментарий")
+    else:
+        for field, errors in comment_form.errors.items():
+            for error in errors:
+                flash(f"Ошибка в {getattr(comment_form, field).label.text}: {error}")
+    return redirect(get_redirect_target())
 
 
 @blueprint.route("/img/<int:img_id>")

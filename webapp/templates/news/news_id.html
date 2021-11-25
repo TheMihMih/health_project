@@ -31,18 +31,24 @@
                 </div>
               </div>
             {% endfor %}
+          {% else %}
+              <h3>Комментариев нет</h3>
           {% endif %}
           
           <div class="b-example-divider"></div>
 
-          <form action="{{ url_for('news.add_comment')}}" method="POST">
-            {{ comment_form.hidden_tag() }}
-            <div class="form-group">
-              {{ comment_form.comment_text() }}
-              {{ comment_form.comment_text.label }}
-            </div>
-            {{ comment_form.submit() }}
-          </form>
+          {% if current_user.is_authenticated %}
+            <form action="{{ url_for('news.add_comment')}}" method="POST">
+              {{ comment_form.hidden_tag() }}
+              <div class="form-group">
+                {{ comment_form.comment_text() }}
+                {{ comment_form.comment_text.label }}
+              </div>
+              {{ comment_form.submit() }}
+            </form>
+          {% else %}
+            <a href="{{ url_for('user.login', next=request.full_path) }}">Авторизуйтесь</a> чтобы добавить комментарий
+          {% endif %}
 
           <div class="b-example-divider"></div>
 

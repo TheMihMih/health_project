@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, SubmitField, TextAreaField, FileField, SelectField, HiddenField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
+from webapp.news.models import News
 
 
 class NewsForm(FlaskForm):
@@ -44,3 +45,7 @@ class CommentForm(FlaskForm):
         render_kw={"class": "form-control"}
         )
     submit = SubmitField("Комментировать", render_kw={"class": "btn btn-primary"})
+
+    def validate_news_id(self, news_id):
+        if not News.query.get(news_id.data):
+            raise ValidationError("Вы пытаетесь прокомментировать новость с несуществующим ID")
