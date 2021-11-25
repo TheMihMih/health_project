@@ -3,9 +3,7 @@ from flask_login import current_user
 from datetime import date
 
 from flask_login.utils import login_required
-from flask_wtf import form
 from webapp.db import db
-
 
 from webapp.food.forms import FoodForm, GraphDisplay, UserFood
 from webapp.food.models import BDFood, DailyConsumption

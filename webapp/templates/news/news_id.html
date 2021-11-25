@@ -10,14 +10,53 @@
 
     <div class="row">
       
-      <div class="col-8">
+      <div class="col-8 news_context">
         <h1>{{ news_context.title }}</h1>
 
           <h5>{{ news_context.category }}</h5>
-          {{ news_context.text }}<br>
+          {{ news_context.text|safe }}<br>
+
+          {% if news_context.comments %}
+            <h3>Комментарии:</h3>
+            {% for comment in news_context.comments %}
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">{{ comment.text}}</p>
+                  <p class="card-text">
+                    <small>
+                      Опубликовано: {{comment.created.strftime('%d.%m.%Y')}}
+                      Автор: {{comment.user.username}}
+                    </small>
+                  </p>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+              <h3>Комментариев нет</h3>
+          {% endif %}
+          
+          <div class="b-example-divider"></div>
+
+          {% if current_user.is_authenticated %}
+            <form action="{{ url_for('news.add_comment')}}" method="POST">
+              {{ comment_form.hidden_tag() }}
+              <div class="form-group">
+                {{ comment_form.comment_text() }}
+                {{ comment_form.comment_text.label }}
+              </div>
+              {{ comment_form.submit() }}
+            </form>
+          {% else %}
+            <a href="{{ url_for('user.login', next=request.full_path) }}">Авторизуйтесь</a> чтобы добавить комментарий
+          {% endif %}
+
+          <div class="b-example-divider"></div>
+
           {% if news_context.image %}
             <img class="ImageDrawer" src="{{ url_for('news.get_image', img_id=news_context.id) }}"  width="800" height="800">
           {% endif %}
+
+          <div class="b-example-divider"></div>
 
           {% if user.is_admin %}
             <div class="text-end">

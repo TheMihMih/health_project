@@ -9,28 +9,30 @@
 {% block body%}
 
 <div class="row">
-    <div class="col-8">
-      <form action="{{ url_for('admin.process_creating_news') }}" enctype="multipart/form-data" method="POST">
-        {{ form.hidden_tag() }}
-        <div class="mb-3">
-          {{ form.news_title.label }}
-          {{ form.news_title() }}
-        </div> 
-        <div class="mb-3">
-          {{ form.news_category.label }}
-          {{ form.news_category }}
-        </div>
-        <div class="mb-3">
-          {{ form.news_text.label }}
-          {{ form.news_text(rows='20') }}
-        </div>   
-        <div class="mb-3">
-          {{ form.news_image.label }}
-          {{ form.news_image() }}
-        </div>
-        {{ form.submit() }}
-      </form>  
-    </div>
+  <div class="col-8">
+    <form action="{{ url_for('admin.process_creating_news') }}" enctype="multipart/form-data" method="POST">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.news_title.label }}
+        {{ form.news_title() }}
+      </div> 
+      <div class="mb-3">
+        {{ form.news_category.label }}
+        {{ form.news_category }}
+      </div>
+      <div class="mb-3">
+        {{ form.news_text.label }}
+        {{ form.news_text(rows='20') }}
+      </div>   
+      <div class="mb-3">
+        {{ form.news_image.label }}
+        {{ form.news_image() }}
+      </div>
+      {{ form.submit() }}<div class="col-8">
+        {{ text }}
+      </div>
+    </form>  
+  </div>
 </div>
 
 {% endblock %}
