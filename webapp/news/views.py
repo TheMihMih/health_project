@@ -1,11 +1,15 @@
 from flask import abort, Blueprint, render_template, Response, flash, request
 from flask_login import current_user
-from webapp.news.forms import SearchForm
-from webapp.news.models import BDConnector
+from flask_login.utils import login_required
+from werkzeug.utils import redirect
+from webapp.news.forms import SearchForm, CommentForm
+from webapp.news.models import Comment, News
 from PIL import Image
 from io import BytesIO
 from fuzzywuzzy import fuzz
 from webapp.food.views import graph_maker
+from webapp.db import db
+from webapp.utils import get_redirect_target
 
 blueprint = Blueprint("news", __name__)
 
@@ -16,7 +20,7 @@ def index():
     page_title = "Главная страница"
     text = """Мы рады Вас приветствовать на нашем сайте """
     text2 = """Здесь будет интересный блок """
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).limit(5)
+    news_list = News.query.filter(News.text.isnot(None)).order_by(News.id.desc()).limit(5)
     if current_user.is_authenticated:
         script, div, data_check = graph_maker(3)
         return render_template(
@@ -50,7 +54,7 @@ def about():
 def display_news():
     form = SearchForm()
     title = "Новости"
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+    news_list = News.query.filter(News.text.isnot(None)).order_by(News.id.desc()).all()
     return render_template(
         "news/news.html",
         page_title=title,
@@ -65,14 +69,14 @@ def process_searching_news():
     form = SearchForm()
     title = "Новости Python"
     search_title = request.values[form.search_news.name]
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+    news_list = News.query.filter(News.text.isnot(None)).order_by(News.id.desc()).all()
     news_exists = []
     if form.validate_on_submit:
         for news in news_list:
             Ratio = fuzz.token_sort_ratio(news.title, search_title)
             if Ratio >= 50:
-                news_exists += BDConnector.query.filter(
-                    BDConnector.title == news.title
+                news_exists += News.query.filter(
+                    News.title == news.title
                 ).all()
         if news_exists:
             return render_template(
@@ -94,23 +98,43 @@ def process_searching_news():
 
 @blueprint.route("/news/<int:news_id>", methods=["GET"])
 def news(news_id):
-    news_context = BDConnector.query.filter(BDConnector.id == news_id).first()
+    news_context = News.query.filter(News.id == news_id).first()
     if not news_context:
         abort(404)
-    page_title = news_context.title
-    news_list = BDConnector.query.order_by(BDConnector.id.desc()).all()
+    news_list = News.query.filter(News.text.isnot(None)).order_by(News.id.desc()).limit(5)
+    comment_form = CommentForm(news_id=news_context.id)
     return render_template(
         "news/news_id.html",
-        page_title=page_title,
+        page_title=news_context.title,
         news_context=news_context,
         news_list=news_list,
         user=current_user,
+        comment_form=comment_form,
     )
+
+
+@blueprint.route("/news/comment", methods=["POST"])
+@login_required
+def add_comment():
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = Comment(
+            text=comment_form.comment_text.data, 
+            news_id=comment_form.news_id.data, 
+            user_id=current_user.id)
+        db.session.add(comment)
+        db.session.commit()
+        flash("Спасибо за Ваш комментарий")
+    else:
+        for field, errors in comment_form.errors.items():
+            for error in errors:
+                flash(f"Ошибка в {getattr(comment_form, field).label.text}: {error}")
+    return redirect(get_redirect_target())
 
 
 @blueprint.route("/img/<int:img_id>")
 def get_image(img_id):
-    news_img = BDConnector.query.filter(BDConnector.id == img_id).first()
+    news_img = News.query.filter(News.id == img_id).first()
     if news_img.image:
 
         image = Image.open(BytesIO(news_img.image))
@@ -125,13 +149,13 @@ def get_image(img_id):
 @blueprint.route("/category/<url>", methods=["GET"])
 def category(url):
     if url == "meal":
-        category_list = BDConnector.query.filter(
-            BDConnector.category == "Питание"
+        category_list = News.query.filter(
+            News.category == "Питание"
         ).all()
         page_title = "Новости про питание"
     elif url == "train":
-        category_list = BDConnector.query.filter(
-            BDConnector.category == "Тренировки"
+        category_list = News.query.filter(
+            News.category == "Тренировки"
         ).all()
         page_title = "Новости про тренировки"
 

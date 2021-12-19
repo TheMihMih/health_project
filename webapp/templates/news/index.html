@@ -14,6 +14,7 @@
       {% for news in news_list %}
         <h3><a href=" news/{{news.id}} ">{{ news.title }}</a></h3>
         <b>{{ news.category }}</b><br>
+        <p>{{ news.published.strftime('%d.%m.%Y') }} | Комментарии: {{ news.comments_count() }}</p>
         <hr />
       {% endfor %}
 

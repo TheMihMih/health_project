@@ -5,7 +5,7 @@ from webapp.admin.forms import EditForm
 from webapp.db import db
 
 from webapp.news.forms import NewsForm
-from webapp.news.models import BDConnector
+from webapp.news.models import News
 from webapp.news.views import news
 
 from webapp.user.decorators import admin_required
@@ -22,7 +22,7 @@ def admin():
     text = "Контент админки"
     title = "Редактирование"
     form = EditForm()
-    news_edit = BDConnector.query.all()
+    news_edit = News.query.all()
     return render_template(
         "admin/index.html",
         page_title=page_title,
@@ -38,7 +38,7 @@ def admin():
 @admin_required
 def edit(news_id):
     form = EditForm()
-    news_edit = BDConnector.query.filter(BDConnector.id == news_id).first()
+    news_edit = News.query.filter(News.id == news_id).first()
     if request.method == "GET":
         form.edit_title.data = news_edit.title
         form.edit_text.data = news_edit.text
@@ -60,15 +60,15 @@ def edit(news_id):
 def process_creating_news():
     form = NewsForm()
     if form.validate_on_submit():
-        news_exists = BDConnector.query.filter(
-            BDConnector.title == form.news_title.data
+        news_exists = News.query.filter(
+            News.title == form.news_title.data
         ).count()
         if news_exists:
             flash("Данная новость уже существует в базе")
             return redirect(url_for("admin.create_news"))
         else:
             image_data = request.files[form.news_image.name].read()
-            new_news = BDConnector(
+            new_news = News(
                 title=form.news_title.data,
                 category=form.news_category.data,
                 text=form.news_text.data,
