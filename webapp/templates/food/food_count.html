@@ -8,14 +8,25 @@
 
 {% block body%}
 
+
+
 <div class="row">
   <div class="col-8">
-    <form action="{{ url_for('food.process_adding_calories') }}", method="POST">
+    <form action="{{ url_for('food.process_adding_calories') }}">
       {{ form.hidden_tag() }}
       <div class="mb-3">
-        {{ form.food_name.label }}
-        {{ form.food_name() }}
-      </div> 
+        <label>Укажите продукт:</label><br>                       
+        <select class="js-example-basic-single" name="food">
+          {% for food in food_list %}
+            <option>{{ food.name_food }}</option>
+          {% endfor %}
+        </select>
+        <script>
+          $(document).ready(function() {
+              $('.js-example-basic-single').select2({width:'100%'});
+          });
+        </script>
+      </div>
       <div class="mb-3">
         {{ form.food_weight.label }}
         {{ form.food_weight() }}

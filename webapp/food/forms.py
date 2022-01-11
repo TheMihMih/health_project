@@ -31,10 +31,11 @@ class FoodForm(FlaskForm):
 
 
 class UserFood(FlaskForm):
-    food_name = StringField(
+    """food_name = SelectField(
         "Название продукта",
         render_kw={"class": "form-control"},
-    )
+        choices=[]
+    )"""
     food_weight = StringField(
         "Вес продукта, г.",
         validators=[DataRequired()],

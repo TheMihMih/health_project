@@ -10,6 +10,8 @@ from webapp.food.models import BDFood, DailyConsumption
 
 from webapp.food.utils import daily_counter, graph_maker
 
+import requests
+
 
 blueprint = Blueprint("food", __name__, url_prefix="/food")
 
@@ -55,6 +57,7 @@ def food_count():
     title = "Счетчик калорий"
     form = UserFood()
     form_Graph = GraphDisplay()
+    food_list = BDFood.query.all()
     today = date.today().strftime("%d/%m/%Y")
     daily_consumption = daily_counter(today)
     if form_Graph.validate_on_submit():
@@ -72,6 +75,7 @@ def food_count():
         the_div=div,
         the_script=script,
         data_check=data_check,
+        food_list=food_list
     )
 
 
@@ -80,41 +84,36 @@ def food_count():
 def process_adding_calories():
     form = UserFood()
     today = date.today().strftime("%d/%m/%Y")
-    if form.validate_on_submit():
-        food_consumed = BDFood.query.filter(
-            BDFood.name_food == request.values[form.food_name.name]
-        ).first()
-        weight_consumed = float(request.values[form.food_weight.name])
-        if food_consumed:
-            product_consumed = food_consumed.name_food
-            сalories_consumed = weight_consumed * float(food_consumed.calories) * 0.01
-            proteins_consumed = weight_consumed * float(food_consumed.proteins) * 0.01
-            fats_consumed = weight_consumed * float(food_consumed.fats) * 0.01
-            carbohydrates_consumed = (
-                weight_consumed * float(food_consumed.carbohydrates) * 0.01
-            )
-            consumption_date = today
-            new_consumption = DailyConsumption(
-                user_cons=current_user.id,
-                cons_product=product_consumed,
-                cons_calories=сalories_consumed,
-                cons_prots=proteins_consumed,
-                cons_fats=fats_consumed,
-                cons_carbos=carbohydrates_consumed,
-                cons_weight=weight_consumed,
-                cons_day=consumption_date,
-            )
-            db.session.add(new_consumption)
-            db.session.commit()
-            daily_consumption = daily_counter(today)
+    #if form.validate_on_submit():
+    get_food = request.args.getlist("food")
+    food_consumed = BDFood.query.filter(
+        BDFood.name_food == get_food[0]
+    ).first()
+    weight_consumed = float(request.values[form.food_weight.name])
+    if food_consumed:
+        product_consumed = food_consumed.name_food
+        сalories_consumed = weight_consumed * float(food_consumed.calories) * 0.01
+        proteins_consumed = weight_consumed * float(food_consumed.proteins) * 0.01
+        fats_consumed = weight_consumed * float(food_consumed.fats) * 0.01
+        carbohydrates_consumed = (
+            weight_consumed * float(food_consumed.carbohydrates) * 0.01
+        )
+        consumption_date = today
+        new_consumption = DailyConsumption(
+            user_cons=current_user.id,
+            cons_product=product_consumed,
+            cons_calories=сalories_consumed,
+            cons_prots=proteins_consumed,
+            cons_fats=fats_consumed,
+            cons_carbos=carbohydrates_consumed,
+            cons_weight=weight_consumed,
+            cons_day=consumption_date,
+        )
+        db.session.add(new_consumption)
+        db.session.commit()
+        daily_consumption = daily_counter(today)
 
-            flash(f"Сегодня Вы покушали на {daily_consumption[0]} калорий")
-            return redirect(url_for("food.food_count"))
-        else:
-            flash(
-                f"Вы ввели: {request.values[form.food_name.name]}"
-                f"Данный продукт отсутствует в базе. Попробуйте изменить запрос или добавьте продукт в базу"
-            )
-            return redirect(url_for("food.food_count"))
-    flash("Форма заполнена неверно")
-    return redirect(url_for("food.food_count"))
+        flash(f"Сегодня Вы покушали на {daily_consumption[0]} калорий")
+        return redirect(url_for("food.food_count"))
+    #flash("Форма заполнена неверно")
+    #return redirect(url_for("food.food_count"))
