@@ -113,7 +113,7 @@ def process_adding_calories():
         db.session.commit()
         daily_consumption = daily_counter(today)
 
-        flash(f"Сегодня Вы покушали на {daily_consumption[0]} калорий")
+        flash(f"Вы покушали на {сalories_consumed} калорий")
         return redirect(url_for("food.food_count"))
     #flash("Форма заполнена неверно")
     #return redirect(url_for("food.food_count"))
