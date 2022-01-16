@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <form action="{{ url_for('user.process_personaldata_edit') }}" method="post" class="container">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.user_weight.label }}
+          {{ form.user_weight() }}
+        </div>
+        <div class="mb-3">
+          {{ form.user_height.label }}
+          {{ form.user_height() }}
+        </div>
+        <div class="mb-3">
+          {{ form.gender.label }}
+          {{ form.gender() }}
+        </div>
+        <div class="mb-3">
+          {{ form.purpouse.label }}
+          {{ form.purpouse() }}
+        </div>
+        <div class="mb-3 form-check"> 
+          {{ form.submit }}
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-8">
+
+  </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, IntegerField
+from wtforms.fields.core import SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 from webapp.user.models import User
@@ -57,3 +58,27 @@ class RegistrationForm(FlaskForm):
         users_count = User.query.filter_by(email=email.data).count()
         if users_count > 0:
             raise ValidationError("Пользователь с такой почтой уже существует!!!")
+
+
+class Personal_Data(FlaskForm):
+    user_weight = IntegerField(
+        "Вес",
+        validators=[DataRequired()],
+        render_kw={"class": "form-control"},
+    )
+    user_height = IntegerField(
+        "Рост",
+        validators=[DataRequired()],
+        render_kw={"class": "form-control"},
+    )   
+    gender = RadioField(
+        "Пол",
+        choices=["Мужской", "Женский"],
+        render_kw={"class": "form-control"},
+    )
+    purpouse = SelectField(
+        "Пол",
+        choices=["Набрать вес", "Набрать мышечную массу", "Похудеть", "Еще какой-то вариант"],
+        render_kw={"class": "form-control"},
+    )
+    submit = SubmitField("Сохранить", render_kw={"class": "btn btn-primary"})

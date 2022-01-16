@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-4">
+        <form method="get" class="container">
+        {% if data != None %}
+          <div class="mb-3">
+            <label>Текущий вес:{{ data.user_weight }}</label><br>
+          </div>
+          <div class="mb-3">
+            <label>Рост:{{ data.user_height }}</label><br>
+          </div>
+          <div class="mb-3">
+            <label>Пол:{{ data.gender }}</label><br>
+          </div>
+          <div class="mb-3">
+            <label>Текущая цель:{{ data.purpouse }}</label><br>
+          </div>
+        {% else %}
+        <div class="mb-3">
+            <label>Текущий вес: Неуказано</label><br>
+          </div>
+          <div class="mb-3">
+            <label>Рост: Неуказано</label><br>
+          </div>
+          <div class="mb-3">
+            <label>Пол: Неуказано</label><br>
+          </div>
+          <div class="mb-3">
+            <label>Текущая цель: Неуказано</label><br>
+          </div>
+        {% endif %}
+        </form>
+      </div>
+    </div>
+  
+    <div class="col-8">
+        <div class="text-end">
+            <form>
+              <button type="submit" formaction="{{ url_for('user.process_personaldata_edit') }}" class="btn btn-info">Редактировать новость</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

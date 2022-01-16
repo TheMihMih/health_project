@@ -85,9 +85,9 @@ def process_adding_calories():
     form = UserFood()
     today = date.today().strftime("%d/%m/%Y")
     #if form.validate_on_submit():
-    get_food = request.args.getlist("food")
+    get_food = request.args.get("food")
     food_consumed = BDFood.query.filter(
-        BDFood.name_food == get_food[0]
+        BDFood.name_food == get_food
     ).first()
     weight_consumed = float(request.values[form.food_weight.name])
     if food_consumed:
