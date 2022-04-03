@@ -68,6 +68,7 @@ pypiwin32==223
 pytest==6.2.5
 python-dateutil==2.8.2
 pytz==2022.1
+pywin32==303
 PyYAML==6.0
 redis==3.5.3
 regex==2021.9.30
